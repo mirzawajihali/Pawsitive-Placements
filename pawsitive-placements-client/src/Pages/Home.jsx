@@ -1,6 +1,8 @@
 import React from 'react';
 import Category from '../components/Category';
 import Header from '../Layout/Header';
+import AboutSection from '../components/AboutSection';
+
 import { Helmet } from 'react-helmet';
 
 const Home = () => {
@@ -13,7 +15,9 @@ const Home = () => {
             </Helmet>
        <Header></Header>
         <Category />
-
+     <AboutSection></AboutSection>
+        
+       
         </div>
     );
 };

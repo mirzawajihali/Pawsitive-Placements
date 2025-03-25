@@ -11,7 +11,7 @@ const Pets = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch('pets.json')
+        fetch('http://localhost:3000/pets')
             .then(res => res.json())
             .then(data => {
                
@@ -25,9 +25,9 @@ const Pets = () => {
     const cats = pets.filter(pet => pet.category === 'Cat');
   
 
-    if(loading){
-        return <div className='flex justify-center items-center h-screen'><span className="loading loading-bars loading-xl"></span></div>
-    }
+    // if(loading){
+    //     return <div className='flex justify-center items-center h-screen'><span className="loading loading-bars loading-xl"></span></div>
+    // }
     return (
         <div>
               <Helmet>
