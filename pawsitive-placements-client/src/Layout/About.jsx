@@ -1,6 +1,14 @@
+import { Helmet } from "react-helmet";
+
 const About = () => {
   return (
     <div className="bg-white">
+
+<Helmet>
+                <meta charSet="utf-8" />
+                <title>About Us</title>
+                
+            </Helmet>
       {/* Hero Section */}
       <div className="relative bg-gradient-to-r from-[#4361EE] to-[#7209B7]">
         <div className="absolute inset-0">
