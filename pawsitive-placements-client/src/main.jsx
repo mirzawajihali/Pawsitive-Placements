@@ -4,14 +4,17 @@ import './index.css'
 
 import router from './Router/Router.jsx'
 import { RouterProvider } from 'react-router-dom'
-import { ParallaxProvider } from 'react-scroll-parallax'
+
+import AuthProvider from './Provider/AuthProvider.jsx'
 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
- <ParallaxProvider>
+<AuthProvider>
+   
  <RouterProvider router={router} />
- </ParallaxProvider>
+ 
+</AuthProvider>
   </StrictMode>,
 )
 

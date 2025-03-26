@@ -1,45 +1,43 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FaGoogle } from 'react-icons/fa';
+import { AuthContext } from '../Provider/AuthProvider';
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  });
+
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+  const {signInWithGoogle} = useContext(AuthContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    
+
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+
+   
     
     // Simulate API call
-    setTimeout(() => {
-      setLoading(false);
-      // For demo purposes only - in production this would be handled properly
-      if (!formData.email.includes('@')) {
-        setError('Please enter a valid email address');
-      } else {
-        console.log('Login attempted with:', formData);
-        // Handle successful login here
-      }
-    }, 1000);
+   
   };
 
   const handleGoogleLogin = () => {
-    console.log('Google login clicked');
-    // Implement Google OAuth login here
+    signInWithGoogle()
+    .then((result) => {
+      const user = result.user;
+      console.log(user);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
   };
+
+
 
   return (
   <section>
@@ -92,8 +90,8 @@ const Login = () => {
                     type="email"
                     autoComplete="email"
                     required
-                    value={formData.email}
-                    onChange={handleChange}
+                    
+                   
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#B9D9EB] focus:border-[#B9D9EB]"
                   />
                 </div>
@@ -110,8 +108,7 @@ const Login = () => {
                     type="password"
                     autoComplete="current-password"
                     required
-                    value={formData.password}
-                    onChange={handleChange}
+                   
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#B9D9EB] focus:border-[#B9D9EB]"
                   />
                 </div>

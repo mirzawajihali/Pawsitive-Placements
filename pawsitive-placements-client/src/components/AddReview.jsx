@@ -1,95 +1,20 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Rating } from 'react-rating';
+
 import { FaStar, FaRegStar, FaUpload } from 'react-icons/fa';
 
 const AddReview = () => {
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
-    role: '',
-    rating: 0,
-    reviewText: '',
-    adoptedPet: '',
-    image: null
-  });
-  const [imagePreview, setImagePreview] = useState(null);
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
+    role: '',})
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-  };
-
-  const handleRatingChange = (value) => {
-    setFormData({
-      ...formData,
-      rating: value
-    });
-  };
-
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setFormData({
-        ...formData,
-        image: file
-      });
-      
-      // Create a preview URL
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result);
-      };
-      reader.readAsDataURL(file);
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(formData);
     }
-  };
-
-  const validateForm = () => {
-    if (!formData.name.trim()) {
-      setError('Please enter your name');
-      return false;
-    }
-    if (!formData.role.trim()) {
-      setError('Please enter your role');
-      return false;
-    }
-    if (formData.rating === 0) {
-      setError('Please select a rating');
-      return false;
-    }
-    if (!formData.reviewText.trim()) {
-      setError('Please enter your review');
-      return false;
-    }
-    if (!formData.adoptedPet.trim()) {
-      setError('Please enter the name of your adopted pet');
-      return false;
-    }
-    return true;
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setError('');
-    setSuccess(false);
-    
-    if (validateForm()) {
-      setLoading(true);
-      
-      // Simulate API call
-      setTimeout(() => {
-        setLoading(false);
-        setSuccess(true);
-        console.log('Review submitted:', formData);
-        // Handle successful submission here
-      }, 1500);
-    }
-  };
 
   return (
     <div className="bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
@@ -140,8 +65,7 @@ const AddReview = () => {
                       type="text"
                       name="name"
                       id="name"
-                      value={formData.name}
-                      onChange={handleChange}
+                      
                       className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#B9D9EB] focus:ring-[#B9D9EB]"
                       required
                     />
@@ -155,8 +79,7 @@ const AddReview = () => {
                       type="text"
                       name="role"
                       id="role"
-                      value={formData.role}
-                      onChange={handleChange}
+                     
                       placeholder="e.g. Pet Parent, Dog Lover, etc."
                       className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#B9D9EB] focus:ring-[#B9D9EB]"
                       required
@@ -171,8 +94,7 @@ const AddReview = () => {
                       type="text"
                       name="adoptedPet"
                       id="adoptedPet"
-                      value={formData.adoptedPet}
-                      onChange={handleChange}
+                   
                       className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#B9D9EB] focus:ring-[#B9D9EB]"
                       required
                     />
@@ -182,12 +104,7 @@ const AddReview = () => {
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Your Rating*
                     </label>
-                    <Rating
-                      initialRating={formData.rating}
-                      onChange={handleRatingChange}
-                      emptySymbol={<FaRegStar className="text-yellow-300 h-8 w-8" />}
-                      fullSymbol={<FaStar className="text-yellow-400 h-8 w-8" />}
-                    />
+                 
                   </div>
                 </div>
                 
@@ -199,21 +116,13 @@ const AddReview = () => {
                     </label>
                     <div className="flex items-center justify-center">
                       <div className="w-32 h-32 border-2 border-gray-300 border-dashed rounded-full flex items-center justify-center overflow-hidden relative bg-gray-50">
-                        {imagePreview ? (
-                          <img 
-                            src={imagePreview} 
-                            alt="Preview" 
-                            className="h-full w-full object-cover"
-                          />
-                        ) : (
-                          <FaUpload className="h-10 w-10 text-gray-400" />
-                        )}
+                        
                         <input
                           type="file"
                           name="image"
                           id="image"
                           accept="image/*"
-                          onChange={handleImageChange}
+                       
                           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                         />
                       </div>
@@ -229,8 +138,7 @@ const AddReview = () => {
                       id="reviewText"
                       name="reviewText"
                       rows="7"
-                      value={formData.reviewText}
-                      onChange={handleChange}
+                     
                       className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#B9D9EB] focus:ring-[#B9D9EB]"
                       placeholder="Share your experience about adopting from Pawsitive Placements..."
                       required

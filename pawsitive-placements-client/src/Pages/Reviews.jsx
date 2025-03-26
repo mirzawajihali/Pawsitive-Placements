@@ -1,10 +1,12 @@
 import React from 'react';
 import { useLoaderData } from 'react-router-dom';
 
+
 import { motion } from 'framer-motion';
 import { FaPaw, FaQuoteLeft, FaQuoteRight, FaStar } from 'react-icons/fa';
-import Rating from 'react-rating';
 import { ImStarEmpty } from 'react-icons/im';
+import AddReview from '../components/AddReview';
+import Rating from 'react-rating';
 
 const Reviews = () => {
     const reviews = useLoaderData();
@@ -140,7 +142,7 @@ const Reviews = () => {
      
         </motion.div>
       </div>
-
+          <AddReview></AddReview>
     </section>
     );
 };
