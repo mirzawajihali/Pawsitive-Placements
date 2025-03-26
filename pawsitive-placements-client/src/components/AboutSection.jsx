@@ -318,48 +318,21 @@ const AboutSection = () => {
               }}
               className="bg-white rounded-lg overflow-hidden shadow-lg"
             >
-              <div className="h-64 relative">
+              <div className="h-76 relative">
                 <img
-                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+                  src="https://avatars.githubusercontent.com/u/159119082?v=4"
                   alt="Sarah Johnson"
                   className="w-full h-full object-cover object-center"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#041E2B] to-transparent opacity-60"></div>
                 <div className="absolute bottom-4 left-4 text-white">
-                  <h4 className="text-xl font-bold">Sarah Johnson</h4>
-                  <p className="text-sm">Founder & Director</p>
-                </div>
-              </div>
-              <div className="p-6">
-                <p className="text-[#353E43]">
-                  With over 15 years of experience in animal welfare, Sarah leads our team with passion and dedication.
-                </p>
-              </div>
-            </motion.div>
-
-            <motion.div
-              variants={teamItemVariants}
-              whileHover={{ 
-                y: -10,
-                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
-              }}
-              className="bg-white rounded-lg overflow-hidden shadow-lg"
-            >
-              <div className="h-64 relative">
-                <img
-                  src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
-                  alt="Michael Chen"
-                  className="w-full h-full object-cover object-center"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#041E2B] to-transparent opacity-60"></div>
-                <div className="absolute bottom-4 left-4 text-white">
-                  <h4 className="text-xl font-bold">Michael Chen</h4>
+                  <h4 className="text-xl font-bold">Suhail Ahmed Toha</h4>
                   <p className="text-sm">Adoption Coordinator</p>
                 </div>
               </div>
               <div className="p-6">
                 <p className="text-[#353E43]">
-                  Michael ensures our adoption process is smooth and matches pets with their perfect forever families.
+                Toha ensures our adoption process is smooth and matches pets with their perfect forever families.
                 </p>
               </div>
             </motion.div>
@@ -372,21 +345,49 @@ const AboutSection = () => {
               }}
               className="bg-white rounded-lg overflow-hidden shadow-lg"
             >
-              <div className="h-64 relative">
+              <div className="h-76 relative">
                 <img
-                  src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
+                  src="https://scontent.fdac24-5.fna.fbcdn.net/v/t39.30808-6/456050294_1868055310340113_6016985232479596825_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEaRiCuXC5Hg6cPH_vegHwfUP7o9b1NtWJQ_uj1vU21Ygs87IJuDmo0N5qgb6MMZIcNmVvoaxzmRSiwgNu4rp1X&_nc_ohc=gLYW4xwizA4Q7kNvgFRE7PC&_nc_oc=AdnAktAnEpGe_WDIaoKhI3GK_d8xutBiLyskY8PE76HuR3O_RptCD22wmMQtaPYxnQw&_nc_zt=23&_nc_ht=scontent.fdac24-5.fna&_nc_gid=KoB_Wzj2lf2J3ohEp04EHQ&oh=00_AYFyAtRQf3HVM7fWqR6TOINuExvXoBA73K_IzvjBtJKWPA&oe=67EA2D20"
+                  alt="Michael Chen"
+                  className="w-full h-full object-cover object-center"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#041E2B] to-transparent opacity-60"></div>
+                <div className="absolute bottom-4 left-4 text-white">
+                  <h4 className="text-xl font-bold">Mirza Wajih Ali</h4>
+                  <p className="text-sm">Founder & Director</p>
+                </div>
+              </div>
+              <div className="p-6">
+                <p className="text-[#353E43]">
+                With over 15 years of experience in animal welfare, Wajih Bhai leads our team with passion and dedication.
+               
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              variants={teamItemVariants}
+              whileHover={{ 
+                y: -10,
+                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+              }}
+              className="bg-white rounded-lg overflow-hidden shadow-lg"
+            >
+              <div className="h-76 relative">
+                <img
+                  src="https://scontent.fdac24-5.fna.fbcdn.net/v/t1.15752-9/485223059_1115369216944790_2768389872980555564_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeFLbpzNG6lA-PZLah35PqOQS4jJq-goX1pLiMmr6ChfWm3MvVv8AfMo41j9SMAe87L5UujCYr6mMKByDqA7uSDP&_nc_ohc=d8MQZD7xz90Q7kNvgEYiik7&_nc_oc=Adm1XZynY_nuQvDKGk540coSuaZg_TDZ1Pv3lUkycF8rFaIQLDh-xsyzc-mGOSfWVyU&_nc_zt=23&_nc_ht=scontent.fdac24-5.fna&oh=03_Q7cD1wE_pbyPy21wu-Zrj_WJ_1Np-Exwm9MCm-Ohf6_3vvPDYw&oe=680BD31B"
                   alt="Emily Rodriguez"
                   className="w-full h-full object-cover object-center"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#041E2B] to-transparent opacity-60"></div>
                 <div className="absolute bottom-4 left-4 text-white">
-                  <h4 className="text-xl font-bold">Emily Rodriguez</h4>
+                  <h4 className="text-xl font-bold">Mezbah Mohammad Saklain</h4>
                   <p className="text-sm">Veterinary Care Specialist</p>
                 </div>
               </div>
               <div className="p-6">
                 <p className="text-[#353E43]">
-                  Emily ensures all our animals receive top-notch medical care and are healthy for adoption.
+                  Saklain ensures all our animals receive top-notch medical care and are healthy for adoption.
                 </p>
               </div>
             </motion.div>

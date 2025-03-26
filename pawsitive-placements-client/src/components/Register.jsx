@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FaGoogle } from 'react-icons/fa';
+import SocialLogin from './SocialLogin';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -68,11 +69,7 @@ const Register = () => {
     }
   };
 
-  const handleGoogleRegister = () => {
-    console.log('Google registration clicked');
-    // Implement Google OAuth registration here
-  };
-
+  
   return (
    <section>
     <div className="max-w-7xl h-16 mx-auto bg-black"> </div>
@@ -240,18 +237,7 @@ const Register = () => {
               </div>
             </div>
 
-            <div className="mt-6">
-              <motion.button
-                type="button"
-                onClick={handleGoogleRegister}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#B9D9EB]"
-              >
-                <FaGoogle className="w-5 h-5 mr-2 text-red-600" />
-                Sign up with Google
-              </motion.button>
-            </div>
+            <SocialLogin/>
           </div>
         </motion.div>
       </div>
