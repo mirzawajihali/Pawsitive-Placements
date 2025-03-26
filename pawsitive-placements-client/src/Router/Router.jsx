@@ -5,8 +5,9 @@ import {
   } from "react-router-dom";
 import Main from '../Layout/Main';
 import Home from '../Pages/Home';
-
+import ContactUs from '../components/ContactUs';
 import Pets from '../Pages/Pets';
+import Reviews from '../Pages/Reviews';
   const router = createBrowserRouter([
     {
       path: "/",
@@ -21,7 +22,19 @@ import Pets from '../Pages/Pets';
             path: "/pets",
             element: <Pets></Pets>,
 
+        },
+        {
+            path: "/reviews",
+            element:<Reviews></Reviews>,
+            loader:()=> fetch('http://localhost:3000/reviews')
+
+        },
+        {
+            path: "/contact",
+            element:<ContactUs></ContactUs>,
+
         }
+
       ]
     },
     

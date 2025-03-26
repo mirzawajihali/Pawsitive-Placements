@@ -33,6 +33,7 @@ async function run() {
 
 
     const petsCollection = client.db("PawsitivePlacements").collection("pets");
+    const reviewsCollection = client.db("PawsitivePlacements").collection("reviews");
 
 
     // Send a ping to confirm a successful connection
@@ -42,6 +43,15 @@ async function run() {
         const pets = await cursor.toArray();
         res.send(pets);
     });
+
+
+
+    app.get("/reviews", async(req, res) =>{
+      const cursor = reviewsCollection.find();
+      const reviews = await cursor.toArray();
+      res.send(reviews);
+    }
+    )
 
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");

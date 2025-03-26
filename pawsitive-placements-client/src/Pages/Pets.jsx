@@ -25,9 +25,9 @@ const Pets = () => {
     const cats = pets.filter(pet => pet.category === 'Cat');
   
 
-    // if(loading){
-    //     return <div className='flex justify-center items-center h-screen'><span className="loading loading-bars loading-xl"></span></div>
-    // }
+    if(loading){
+        return <div className='flex justify-center items-center h-screen'><span className="loading loading-bars loading-xl"></span></div>
+    }
     return (
         <div>
               <Helmet>
@@ -43,13 +43,13 @@ const Pets = () => {
           className="px-6 py-3  font-bold text-xl text-gray-800 relative transition-all duration-300 hover:text-[#2A6FA8]"
           selectedClassName="border-b-4 text-[#2A6FA8] rounded-lg border-[#B9D9EB]"
         >
-          Cat
+          Dog
         </Tab>
         <Tab
           className="px-6 py-3  text-xl font-bold text-gray-800 relative transition-all duration-300 hover:text-[#2A6FA8]"
           selectedClassName="border-b-4 text-[#2A6FA8] rounded-lg border-[#B9D9EB]"
         >
-          Dog
+         Cat
         </Tab>
       </TabList>
 

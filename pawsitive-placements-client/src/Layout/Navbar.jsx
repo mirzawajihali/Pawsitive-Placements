@@ -51,6 +51,11 @@ const Navbar = () => {
               }`}>
                 Pets
               </Link>
+              <Link to="/reviews" className={`px-3 py-2 rounded-md text-sm font-medium ${
+                isScrolled ? 'text-[#041E2B] hover:text-[#B9D9EB]' : 'text-white hover:text-[#B9D9EB]'
+              }`}>
+                Reviews
+              </Link>
               <Link to="/contact" className={`px-3 py-2 rounded-md text-sm font-medium ${
                 isScrolled ? 'text-[#041E2B] hover:text-[#B9D9EB]' : 'text-white hover:text-[#B9D9EB]'
               }`}>
@@ -108,12 +113,13 @@ const Navbar = () => {
           <Link to="/" className="block px-3 py-2 rounded-md text-base font-medium text-[#041E2B] hover:text-[#B9D9EB]">
             Home
           </Link>
-          <Link to="/about" className="block px-3 py-2 rounded-md text-base font-medium text-[#041E2B] hover:text-[#B9D9EB]">
+          <HashLink to="#about" smooth className="block px-3 py-2 rounded-md text-base font-medium text-[#041E2B] hover:text-[#B9D9EB]">
             About
-          </Link>
+          </HashLink>
           <Link to="/pets" className="block px-3 py-2 rounded-md text-base font-medium text-[#041E2B] hover:text-[#B9D9EB]">
             Pets
           </Link>
+          <Link to="/reviews" className="block px-3 py-2 rounded-md text-base font-medium text-[#041E2B] hover:text-[#B9D9EB]">Reviews</Link>
           <Link to="/contact" className="block px-3 py-2 rounded-md text-base font-medium text-[#041E2B] hover:text-[#B9D9EB]">
             Contact
           </Link>
