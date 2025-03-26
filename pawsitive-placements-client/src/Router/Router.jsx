@@ -8,6 +8,8 @@ import Home from '../Pages/Home';
 import ContactUs from '../components/ContactUs';
 import Pets from '../Pages/Pets';
 import Reviews from '../Pages/Reviews';
+import Login from '../components/Login';
+import Register from '../components/Register';
   const router = createBrowserRouter([
     {
       path: "/",
@@ -33,7 +35,17 @@ import Reviews from '../Pages/Reviews';
             path: "/contact",
             element:<ContactUs></ContactUs>,
 
-        }
+        },
+      {
+        path: "/login",
+        element:<Login></Login>,
+
+      },
+      {
+        path: "/register",
+        element:<Register></Register>,
+
+      }
 
       ]
     },
