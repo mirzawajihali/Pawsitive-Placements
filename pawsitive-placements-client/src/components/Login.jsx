@@ -1,14 +1,18 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../Provider/AuthProvider';
 import SocialLogin from './SocialLogin';
+import { loadCaptchaEnginge, LoadCanvasTemplate,  validateCaptcha } from 'react-simple-captcha';
+
 
 const Login = () => {
+ 
+  const captchaRef = useRef(null);
 
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-
+ const [disabled, setDisabled] = useState(true);
   const {signInWithGoogle} = useContext(AuthContext);
 
   const handleSubmit = (e) => {
@@ -26,8 +30,22 @@ const Login = () => {
    
   };
 
+  useEffect(() => {
+    loadCaptchaEnginge(6);
+  }, []);
 
 
+  const handleValidateCaptcha = (e) => {
+    e.preventDefault();
+    const value = captchaRef.current.value;
+    if(validateCaptcha(value) === true){
+      setError('');
+      setDisabled(false);
+    }else{
+      setError('Captcha is not valid');
+      setDisabled(true);
+    }
+  }
 
   return (
   <section>
@@ -103,6 +121,26 @@ const Login = () => {
                   />
                 </div>
               </div>
+              <div>
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                  Captcha
+                </label>
+                <div className="mt-1">
+                <LoadCanvasTemplate />
+                <input
+                    id="captcha"
+                    name="captcha"
+                    type="text"
+                    ref={captchaRef}
+                    required
+                   
+                    className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#B9D9EB] focus:border-[#B9D9EB]"
+                  />
+                  <button className="btn btn-outline btn-xs w-full mt-2"
+                  onClick={handleValidateCaptcha}
+                  >Validate</button>
+                </div>
+              </div>
   
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
@@ -127,7 +165,7 @@ const Login = () => {
               <div>
                 <motion.button
                   type="submit"
-                  disabled={loading}
+                  disabled={disabled}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className={`w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-[#041E2B] hover:bg-[#353E43] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#B9D9EB] ${loading ? 'opacity-70 cursor-not-allowed' : ''}`}
