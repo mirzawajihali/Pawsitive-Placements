@@ -4,31 +4,34 @@ import { Link } from 'react-router-dom';
 import { AuthContext } from '../Provider/AuthProvider';
 import SocialLogin from './SocialLogin';
 import { loadCaptchaEnginge, LoadCanvasTemplate,  validateCaptcha } from 'react-simple-captcha';
+import { useForm } from 'react-hook-form';
 
 
 const Login = () => {
  
-  const captchaRef = useRef(null);
+ 
 
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
  const [disabled, setDisabled] = useState(true);
-  const {signInWithGoogle} = useContext(AuthContext);
+  const {signInWithGoogle, signInWithGoogle} = useContext(AuthContext);
+  const [captcha, setCaptcha] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setLoading(true);
-    
+  const {register, handleSubmit, formState: {errors}, watch} = useForm();
 
-    const form = e.target;
-    const email = form.email.value;
-    const password = form.password.value;
+  const onSubmit = (data) => {
+    console.log(data);
+    signInWithEmail(data.email, data.password)
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((error) => {
+      console.log(error);
+    })
 
-   
-    
-    // Simulate API call
-   
-  };
+  }
+
+  
 
   useEffect(() => {
     loadCaptchaEnginge(6);
@@ -37,13 +40,15 @@ const Login = () => {
 
   const handleValidateCaptcha = (e) => {
     e.preventDefault();
-    const value = captchaRef.current.value;
+    const value = e.target.value;
     if(validateCaptcha(value) === true){
       setError('');
       setDisabled(false);
+      setCaptcha(true);
     }else{
       setError('Captcha is not valid');
       setDisabled(true);
+      setCaptcha(false);
     }
   }
 
@@ -83,10 +88,21 @@ const Login = () => {
                 className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded"
               >
                 {error}
-              </motion.div>
-            )}
-  
-            <form className="space-y-6" onSubmit={handleSubmit}>
+              </motion.div>)
+               }
+
+               {captcha && 
+                (
+                  <motion.div
+                   initial={{ opacity: 0, height: 0 }}
+                   animate={{ opacity: 1, height: 'auto' }}
+                   className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded"
+                 >
+                  Successfully validated
+                 </motion.div>
+               )}
+               
+            <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                   Email address
@@ -95,6 +111,7 @@ const Login = () => {
                   <input
                     id="email"
                     name="email"
+                    {...register('email')}
                     type="email"
                     autoComplete="email"
                     required
@@ -112,6 +129,7 @@ const Login = () => {
                 <div className="mt-1">
                   <input
                     id="password"
+                    {...register('password')}
                     name="password"
                     type="password"
                     autoComplete="current-password"
@@ -129,16 +147,15 @@ const Login = () => {
                 <LoadCanvasTemplate />
                 <input
                     id="captcha"
+                    {...register('captcha')}
                     name="captcha"
                     type="text"
-                    ref={captchaRef}
+                   onBlur={handleValidateCaptcha}
                     required
                    
                     className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#B9D9EB] focus:border-[#B9D9EB]"
                   />
-                  <button className="btn btn-outline btn-xs w-full mt-2"
-                  onClick={handleValidateCaptcha}
-                  >Validate</button>
+                  
                 </div>
               </div>
   
@@ -187,6 +204,7 @@ const Login = () => {
   
             <SocialLogin/>
             </div>
+
           </motion.div>
         </div>
       </div>
