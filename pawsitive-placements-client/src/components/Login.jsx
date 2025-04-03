@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Provider/AuthProvider';
 import SocialLogin from './SocialLogin';
 import { loadCaptchaEnginge, LoadCanvasTemplate,  validateCaptcha } from 'react-simple-captcha';
@@ -14,8 +14,12 @@ const Login = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
  const [disabled, setDisabled] = useState(true);
-  const {signInWithGoogle, signInWithGoogle} = useContext(AuthContext);
+  const { signInWithEmail, setUser} = useContext(AuthContext);
   const [captcha, setCaptcha] = useState(false);
+  // const location = useLocation();
+  const navigate = useNavigate();
+  // const from = location?.state?.from?.pathname || '/';
+  const from = '/';
 
   const {register, handleSubmit, formState: {errors}, watch} = useForm();
 
@@ -23,7 +27,11 @@ const Login = () => {
     console.log(data);
     signInWithEmail(data.email, data.password)
     .then((result) => {
-      console.log(result);
+      const user = result.user;
+      setUser(user);
+
+     
+       navigate(from);
     })
     .catch((error) => {
       console.log(error);

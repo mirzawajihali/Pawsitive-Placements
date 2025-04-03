@@ -3,20 +3,29 @@ import React, { useContext, useState } from 'react';
 import { motion } from 'framer-motion';
 import { AuthContext } from '../Provider/AuthProvider';
 import { FaGoogle } from 'react-icons/fa';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const SocialLogin = () => {
 
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
   
-    const {signInWithGoogle} = useContext(AuthContext);
+    const {signInWithGoogle, setUser} = useContext(AuthContext);
+    // const location = useLocation();
+    const navigate = useNavigate();
+    // const from = location?.state?.from?.pathname || '/';
+    const from = '/';
 
     
   const handleGoogleLogin = () => {
     signInWithGoogle()
     .then((result) => {
       const user = result.user;
-      console.log(user);
+      setUser(user);
+
+     
+       navigate(from);
+
     })
     .catch((error) => {
         setError(error.message);

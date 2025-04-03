@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaGoogle } from 'react-icons/fa';
 import SocialLogin from './SocialLogin';
+import { AuthContext } from '../Provider/AuthProvider';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +15,14 @@ const Register = () => {
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [generalError, setGeneralError] = useState('');
+
+  const {createUser, setUser} = useContext(AuthContext)
+
+  // const location = useLocation();
+  const navigate = useNavigate();
+  // const from = location?.state?.from?.pathname || '/';
+  const from =  '/';
+  
 
   const handleChange = (e) => {
     setFormData({
@@ -66,6 +75,25 @@ const Register = () => {
         console.log('Registration attempted with:', formData);
         // Handle successful registration here
       }, 1000);
+
+      const form = e.target;
+       
+        
+        const email = form.email.value;
+        const password = form.password.value;
+        
+        
+        createUser(email, password)
+        .then(result =>{
+            const user = result.user;
+            setUser(user);
+         
+            navigate(from);
+        })
+        .catch(error =>{
+            console.log(error);
+        })
+        
     }
   };
 

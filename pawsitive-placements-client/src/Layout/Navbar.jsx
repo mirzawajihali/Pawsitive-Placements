@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/images/LOGO.png'
 import { HashLink } from 'react-router-hash-link';
+import { AuthContext } from '../Provider/AuthProvider';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -14,6 +15,8 @@ const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const {user, logOut} = useContext(AuthContext)
 
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 ${
@@ -64,7 +67,10 @@ const Navbar = () => {
             </div>
             
             {/* Login/Register Buttons */}
-            <div className="flex items-center space-x-3 ml-4">
+            {
+              user ? <button onClick={logOut} className="px-4 py-2 rounded-md text-sm font-medium bg-[#353E43] text-white hover:bg-[#041E2B] transition-colors duration-200">Logout</button>
+              
+              : <div className="flex items-center space-x-3 ml-4">
               <Link
                 to="/login"
                 className={`px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
@@ -82,6 +88,7 @@ const Navbar = () => {
                 Register
               </Link>
             </div>
+            }
           </div>
 
           {/* Mobile menu button */}
@@ -123,7 +130,9 @@ const Navbar = () => {
           <Link to="/contact" className="block px-3 py-2 rounded-md text-base font-medium text-[#041E2B] hover:text-[#B9D9EB]">
             Contact
           </Link>
-          <div className="mt-4 flex flex-col space-y-2">
+          {
+            user? <div className="mt-4 flex flex-col space-y-2"><button onClick={logOut} className="block px-3 py-2 rounded-md text-base font-medium text-[#041E2B] border border-[#041E2B] text-center" >LogOut</button></div>
+            : <div className="mt-4 flex flex-col space-y-2">
             <Link to="/login" className="block px-3 py-2 rounded-md text-base font-medium text-[#041E2B] border border-[#041E2B] text-center">
               Login
             </Link>
@@ -131,6 +140,7 @@ const Navbar = () => {
               Register
             </Link>
           </div>
+          }
         </div>
       </div>
     </nav>
