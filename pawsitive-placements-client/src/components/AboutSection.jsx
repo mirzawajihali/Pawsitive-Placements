@@ -347,7 +347,7 @@ const AboutSection = () => {
             >
               <div className="h-76 relative">
                 <img
-                  src="https://scontent.fdac24-5.fna.fbcdn.net/v/t39.30808-6/456050294_1868055310340113_6016985232479596825_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEaRiCuXC5Hg6cPH_vegHwfUP7o9b1NtWJQ_uj1vU21Ygs87IJuDmo0N5qgb6MMZIcNmVvoaxzmRSiwgNu4rp1X&_nc_ohc=gLYW4xwizA4Q7kNvgFRE7PC&_nc_oc=AdnAktAnEpGe_WDIaoKhI3GK_d8xutBiLyskY8PE76HuR3O_RptCD22wmMQtaPYxnQw&_nc_zt=23&_nc_ht=scontent.fdac24-5.fna&_nc_gid=KoB_Wzj2lf2J3ohEp04EHQ&oh=00_AYFyAtRQf3HVM7fWqR6TOINuExvXoBA73K_IzvjBtJKWPA&oe=67EA2D20"
+                  src="https://avatars.githubusercontent.com/u/86684764?v=4"
                   alt="Michael Chen"
                   className="w-full h-full object-cover object-center"
                 />

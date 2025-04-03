@@ -10,6 +10,7 @@ import Pets from '../Pages/Pets';
 import Reviews from '../Pages/Reviews';
 import Login from '../components/Login';
 import Register from '../components/Register';
+import PrivateRoute from './PrivateRoute';
   const router = createBrowserRouter([
     {
       path: "/",
@@ -27,7 +28,7 @@ import Register from '../components/Register';
         },
         {
             path: "/reviews",
-            element:<Reviews></Reviews>,
+            element:<PrivateRoute><Reviews></Reviews></PrivateRoute>,
             loader:()=> fetch('http://localhost:3000/reviews')
 
         },
