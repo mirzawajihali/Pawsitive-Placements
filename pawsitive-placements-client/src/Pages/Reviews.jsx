@@ -88,7 +88,7 @@ const Reviews = () => {
                   </div>
                   
                   <div>
-                    <h3 className="font-bold text-[#041E2B]">{review.userName}</h3>
+                    <h3 className="font-bold text-[#041E2B]">{review.name}</h3>
                     <p className="text-sm text-[#353E43]">{review.role}</p>
                   </div>
                   
@@ -97,7 +97,7 @@ const Reviews = () => {
                     <div className="mt-1 flex items-center">
                       <span className="mr-1">Adopted:</span>
                       <img 
-                        src={review.petImage} 
+                        src={review.imageUrl} 
                         alt={review.petAdopted} 
                         className="w-8 h-8 rounded-full object-cover border border-[#B9D9EB]"
                       />
@@ -111,13 +111,13 @@ const Reviews = () => {
                   whileHover={{ x: 5 }}
                 >
                   <img 
-                    src={review.petImage} 
-                    alt={review.petAdopted} 
+                    src={review.imageUrl} 
+                    alt={review.adoptedPet} 
                     className="w-12 h-12 rounded-lg object-cover mr-3"
                   />
                   <div>
                     <p className="text-sm font-medium text-[#041E2B]">Adopted Family Member:</p>
-                    <p className="text-[#353E43] font-semibold">{review.petAdopted}</p>
+                    <p className="text-[#353E43] font-semibold">{review.adoptedPet}</p>
                   </div>
                 </motion.div>
               </div>

@@ -1,18 +1,48 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const multer = require('multer');
+const cloudinary = require('cloudinary').v2;
+const { MongoClient, ServerApiVersion } = require('mongodb');
 const port = process.env.PORT || 3000;
 require("dotenv").config();
 
-app.use(cors());
+app.use(cors({
+  origin: process.env.FRONTEND_URL || 'http://localhost:5173', // Your React app's URL
+  credentials: true
+}));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true })); 
+
+
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith('image/')) {
+    cb(null, true);
+  } else {
+    cb(new Error('Only images are allowed!'), false);
+  }
+};
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  fileFilter,
+  limits: { fileSize: 5 * 1024 * 1024 } // 5MB limit
+});
+
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
 
+cloudinary.config({ 
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME, 
+  api_key: process.env.CLOUDINARY_API_KEY, 
+  api_secret: process.env.CLOUDINARY_API_SECRET 
+});
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+
+
+
 const uri = `mongodb+srv://${process.env.USER_NAME}:${process.env.PASSWORD}@cluster0.sk4ge.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -53,6 +83,51 @@ async function run() {
     }
     )
 
+    app.post("/reviews", upload.single('image'), async(req, res) => {
+      try {
+        if (!req.body.name || !req.body.reviewText) {
+          return res.status(400).json({ success: false, message: "Missing required fields" });
+        }
+    
+        const review = {
+          name: req.body.name,
+          role: req.body.role,
+          adoptedPet: req.body.adoptedPet,
+          rating: Number(req.body.rating),
+          reviewText: req.body.reviewText,
+          createdAt: new Date(),
+          userImage : req.body.userImage
+        };
+    
+        if (req.file) {
+          const b64 = Buffer.from(req.file.buffer).toString("base64");
+          let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
+          const cloudinaryRes = await cloudinary.uploader.upload(dataURI, {
+            folder: "pawsitive-placements/reviews",
+            quality: "auto:good"
+          });
+          review.imageUrl = cloudinaryRes.secure_url;
+        }
+    
+        const result = await reviewsCollection.insertOne(review);
+        
+        res.status(201).json({
+          success: true,
+          review: {
+            ...review,
+            _id: result.insertedId
+          }
+        });
+      } catch (error) {
+        console.error("Review submission error:", error);
+        res.status(500).json({
+          success: false,
+          message: "Internal server error",
+          error: error.message
+        });
+      }
+    });
+
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
@@ -66,6 +141,5 @@ run().catch(console.dir);
 app.get('/', (req, res) => {
     res.send('Adopt animal nowwwwwww!!');
 });
-
 
 
