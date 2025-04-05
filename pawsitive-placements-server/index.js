@@ -69,7 +69,17 @@ async function run() {
     // Send a ping to confirm a successful connection
 
     app.get('/pets', async (req, res) => {
-        const cursor = petsCollection.find();
+      const searchBreed = req.query?.searchBreed;
+      let query = {};
+
+      if(searchBreed){
+        query.breed = {
+          $regex: searchBreed,
+          $options: "i"
+        }
+      }
+
+        const cursor = petsCollection.find(query);
         const pets = await cursor.toArray();
         res.send(pets);
     });

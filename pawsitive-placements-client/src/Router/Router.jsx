@@ -6,11 +6,12 @@ import {
 import Main from '../Layout/Main';
 import Home from '../Pages/Home';
 import ContactUs from '../components/ContactUs';
-import Pets from '../Pages/Pets';
+
 import Reviews from '../Pages/Reviews';
 import Login from '../components/Login';
 import Register from '../components/Register';
 import PrivateRoute from './PrivateRoute';
+import Pets from '../Pages/Pets';
   const router = createBrowserRouter([
     {
       path: "/",

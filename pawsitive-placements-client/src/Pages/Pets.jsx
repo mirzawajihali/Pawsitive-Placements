@@ -2,32 +2,58 @@ import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import PetCover from '../components/PetCover';
 
+
 import ShowCategory from '../components/ShowCategory';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
+import { FaSearch } from 'react-icons/fa';
+
 
 const Pets = () => {
 
     const [pets, setPets] = useState([]);
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        fetch('http://localhost:3000/pets')
-            .then(res => res.json())
-            .then(data => {
+    // useEffect(() => {
+    //     fetch('http://localhost:3000/pets')
+    //         .then(res => res.json())
+    //         .then(data => {
                
 
-                setPets(data);
-                setLoading(false);
-            })
-    }, []);
+    //             setPets(data);
+    //             setLoading(false);
+    //         })
+    // }, []);
+
+  
+   
+  
+    const [searchBreed, setSearchBreed]= useState('');
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() =>{
+        setLoading(true);
+        fetch(`http://localhost:3000/pets?searchBreed=${searchBreed}`)
+        .then(res => res.json())
+        .then(data => {
+            setPets(data);
+            setLoading(false);
+        })
+        .catch(error => {
+            console.error("Error fetching pets:", error);
+            setLoading(false);
+        });
+    },[searchBreed]);
+
+
+
 
     const dogs = pets.filter(pet => pet.category === 'Dog');
     const cats = pets.filter(pet => pet.category === 'Cat');
   
 
-    if(loading){
-        return <div className='flex justify-center items-center h-screen'><span className="loading loading-bars loading-xl"></span></div>
-    }
+    // if(loading){
+    //     return <div className='flex justify-center items-center h-screen'><span className="loading loading-bars loading-xl"></span></div>
+    // }
     return (
         <div>
               <Helmet>
@@ -55,9 +81,30 @@ const Pets = () => {
 
 
     <TabPanel>
+    <div className="relative w-full mt-6 max-w-xl flex justify-self-center mx-5 bg-white rounded-full">
+    <FaSearch className="absolute  left-8 top-1/2 transform -translate-y-1/2 text-[#8d8d8d]" />
+                    <input
+                    onKeyUp={(e) => setSearchBreed(e.target.value)}
+                    type="text"
+                    placeholder="Search by Breed"
+                    className="rounded-full w-full  h-16 bg-transparent py-2 pl-14 pr-32 outline-none border-2 border-[#d8d7d7] shadow-md hover:outline-none focus:ring-[#8d8d8d] focus:border-[#626262]"
+                    />
+                   
+                </div>
     <ShowCategory pets={dogs} animal="Dogs"/>
+    
     </TabPanel>
     <TabPanel>
+    <div className="relative w-full max-w-xl mt-6 flex justify-self-center mx-5 bg-white rounded-full">
+    <FaSearch className="absolute  left-8 top-1/2 transform -translate-y-1/2 text-[#8d8d8d]" />
+                    <input
+                    onKeyUp={(e) => setSearchBreed(e.target.value)}
+                    type="text"
+                    placeholder="Search by Breed"
+                    className="rounded-full w-full  h-16 bg-transparent py-2 pl-14 pr-32 outline-none border-2 border-[#d8d7d7] shadow-md hover:outline-none focus:ring-[#8d8d8d] focus:border-[#626262]"
+                    />
+                   
+                </div>
     <ShowCategory pets={cats} animal="Cats"/>
     </TabPanel>
   </Tabs>
