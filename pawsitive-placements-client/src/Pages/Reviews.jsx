@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLoaderData } from 'react-router-dom';
 
-
+import { formatDistanceToNow } from 'date-fns';
 import { motion } from 'framer-motion';
 import { FaPaw, FaQuoteLeft, FaQuoteRight, FaStar } from 'react-icons/fa';
 import { ImStarEmpty } from 'react-icons/im';
@@ -92,16 +92,10 @@ const Reviews = () => {
                     <p className="text-sm text-[#353E43]">{review.role}</p>
                   </div>
                   
-                  <div className="ml-auto text-xs text-gray-500 flex flex-col items-end">
-                    <span>{review.date}</span>
-                    <div className="mt-1 flex items-center">
-                      <span className="mr-1">Adopted:</span>
-                      <img 
-                        src={review.imageUrl} 
-                        alt={review.petAdopted} 
-                        className="w-8 h-8 rounded-full object-cover border border-[#B9D9EB]"
-                      />
-                    </div>
+                  <div className="ml-auto text-xs  text-gray-500 flex flex-col items-end">
+                  <span>{review.createdAt && formatDistanceToNow(new Date(review.createdAt), { addSuffix: true })}</span>
+
+                   
                   </div>
                 </div>
                 
