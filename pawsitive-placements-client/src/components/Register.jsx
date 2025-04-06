@@ -8,6 +8,7 @@ import { AuthContext } from '../Provider/AuthProvider';
 const Register = () => {
   const [formData, setFormData] = useState({
     name: '',
+    photo:'',
     email: '',
     password: '',
     confirmPassword: ''
@@ -16,7 +17,7 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const [generalError, setGeneralError] = useState('');
 
-  const {createUser, setUser} = useContext(AuthContext)
+  const {createUser, setUser, updateUserProfile} = useContext(AuthContext)
 
   // const location = useLocation();
   const navigate = useNavigate();
@@ -81,14 +82,22 @@ const Register = () => {
         
         const email = form.email.value;
         const password = form.password.value;
+        const name = form.name.value;
+        const photo = form.photo.value;
+
         
         
         createUser(email, password)
         .then(result =>{
             const user = result.user;
             setUser(user);
+            updateUserProfile(name, photo)
+            .then(()=>{
+              console.log("user profile updated")
+            })
+            .catch(error => console.log(error))
          
-            navigate(from);
+            navigate("/");
         })
         .catch(error =>{
             console.log(error);
@@ -155,6 +164,26 @@ const Register = () => {
                 />
                 {errors.name && (
                   <p className="mt-1 text-sm text-red-600">{errors.name}</p>
+                )}
+              </div>
+            </div>
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                Photo URL
+              </label>  
+              <div className="mt-1">
+                <input
+                  id="photo"
+                  name="photo"
+                  type="text"
+                  autoComplete="photo"
+                  required
+                  value={formData.photo}
+                  onChange={handleChange}
+                  className={`appearance-none block w-full px-3 py-2 border ${errors.photo ? 'border-red-300' : 'border-gray-300'} rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#B9D9EB] focus:border-[#B9D9EB]`}
+                />
+                {errors.photo && (
+                  <p className="mt-1 text-sm text-red-600">{errors.photo}</p>
                 )}
               </div>
             </div>

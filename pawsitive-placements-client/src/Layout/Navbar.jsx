@@ -71,10 +71,12 @@ const Navbar = () => {
             
             {/* Login/Register Buttons */}
             {
-              user ? <div className='flex gap-1'> 
+              user ? <div className='flex gap-2 items-center'> 
+              <img className='h-8 w-8 rounded-full border-2 ' src={user.photoURL} alt="" />
               <h2 className={`px-3 py-2 rounded-md text-mg font-bold ${
                 isScrolled ? 'text-[#041E2B] hover:text-[#B9D9EB]' : 'text-white hover:text-[#B9D9EB]'
               }`} > {user.displayName}</h2>
+              
                 <button onClick={logOut} className="px-4 py-2 rounded-md text-sm font-medium bg-[#353E43] text-white hover:bg-[#041E2B] transition-colors duration-200">Logout</button></div>
               
               : <div className="flex items-center space-x-3 ml-4">
