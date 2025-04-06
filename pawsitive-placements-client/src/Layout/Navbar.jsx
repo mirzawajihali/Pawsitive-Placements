@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import logo from '../assets/images/LOGO.png'
 import { HashLink } from 'react-router-hash-link';
 import { AuthContext } from '../Provider/AuthProvider';
+import { PiDogBold } from "react-icons/pi";
+
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -66,6 +68,13 @@ const Navbar = () => {
               }`}>
                 Contact
               </Link>
+              <Link to="/" className={`px-3 py-2 rounded-md text-sm font-medium ${
+                isScrolled ? 'text-[#041E2B] hover:text-[#B9D9EB]' : 'text-white hover:text-[#B9D9EB]'
+              }`}>
+                <button className="btn btn-sm">
+  Adoption <div className="badge badge-sm bg-[#B9D9EB] "><PiDogBold /></div>
+</button>
+              </Link>
             </div>
           
             
@@ -75,7 +84,7 @@ const Navbar = () => {
               <img className='h-8 w-8 rounded-full border-2 ' src={user.photoURL} alt="" />
               <h2 className={`px-3 py-2 rounded-md text-mg font-bold ${
                 isScrolled ? 'text-[#041E2B] hover:text-[#B9D9EB]' : 'text-white hover:text-[#B9D9EB]'
-              }`} > {user.displayName}</h2>
+              }`} >   {user.displayName.split(' ')[0]}</h2>
               
                 <button onClick={logOut} className="px-4 py-2 rounded-md text-sm font-medium bg-[#353E43] text-white hover:bg-[#041E2B] transition-colors duration-200">Logout</button></div>
               

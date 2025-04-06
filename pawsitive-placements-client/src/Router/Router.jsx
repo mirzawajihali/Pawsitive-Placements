@@ -12,6 +12,7 @@ import Login from '../components/Login';
 import Register from '../components/Register';
 import PrivateRoute from './PrivateRoute';
 import Pets from '../Pages/Pets';
+import PetDetailPage from '../components/PetDetailPage';
   const router = createBrowserRouter([
     {
       path: "/",
@@ -27,6 +28,11 @@ import Pets from '../Pages/Pets';
             element: <Pets></Pets>,
 
         },
+        {
+          path:"/pets/:id",
+          element:<PrivateRoute><PetDetailPage></PetDetailPage></PrivateRoute>,
+          loader:({params})=>fetch(`http://localhost:3000/pets/${params.id}`)
+      },
         {
             path: "/reviews",
             element:<PrivateRoute><Reviews></Reviews></PrivateRoute>,

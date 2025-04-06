@@ -19,7 +19,7 @@ const PetCard = ({ pet }) => {
 
   // Use provided pet data or default
   const {
-    id,
+    _id,
     name, 
     age, 
     breed, 
@@ -107,7 +107,7 @@ const PetCard = ({ pet }) => {
 
         {/* Action buttons with a unique split design */}
         <div className="grid grid-cols-12 gap-2">
-          <Link to={`/pets/${id}`} className="col-span-8">
+          <Link to={`/pets/${_id}`} className="col-span-8">
             <motion.button 
               className="w-full h-10 bg-[#353E43] hover:bg-[#041E2B] text-white rounded-md transition-colors duration-300 flex justify-center items-center"
               whileHover={{ scale: 1.02 }}

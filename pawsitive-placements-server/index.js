@@ -3,7 +3,7 @@ const app = express();
 const cors = require('cors');
 const multer = require('multer');
 const cloudinary = require('cloudinary').v2;
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const port = process.env.PORT || 3000;
 require("dotenv").config();
 
@@ -83,6 +83,13 @@ async function run() {
         const pets = await cursor.toArray();
         res.send(pets);
     });
+
+    app.get("/pets/:id", async(req, res)=>{
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)};
+      const pet = await petsCollection.findOne(query);
+      res.send(pet);
+  })
 
 
 
