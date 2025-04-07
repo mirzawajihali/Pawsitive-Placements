@@ -1,9 +1,14 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../Provider/AuthProvider';
+import Swal from 'sweetalert2';
 
 const PetCard = ({ pet }) => {
   const [isHovered, setIsHovered] = useState(false);
+
+  const {user} = useContext(AuthContext);
+  const navigate = useNavigate();
 
   // Default pet data if none provided
   const defaultPet = {
@@ -28,6 +33,36 @@ const PetCard = ({ pet }) => {
     image,
     status
   } = pet || defaultPet;
+
+
+  const handleAdoption =() =>{
+    if(user){
+      navigate(`/pets/${_id}`)
+    }
+
+    else{
+      Swal.fire({
+        title: "You're not logged in!",
+        text: "Please login to continue.",
+        imageUrl: "https://cdn-icons-png.flaticon.com/512/565/565547.png", // Replace with your own image if needed
+        imageWidth: 100,
+        imageHeight: 100,
+        imageAlt: "Login required",
+        icon: "info",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Login Now",
+        cancelButtonText: "Cancel"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login") // Navigate to login page
+        }
+      });
+      
+      
+    }
+  }
 
   return (
     <motion.div 
@@ -107,15 +142,15 @@ const PetCard = ({ pet }) => {
 
         {/* Action buttons with a unique split design */}
         <div className="grid grid-cols-12 gap-2">
-          <Link to={`/pets/${_id}`} className="col-span-8">
+          <button onClick={handleAdoption}  className="col-span-8">
             <motion.button 
               className="w-full h-10 bg-[#353E43] hover:bg-[#041E2B] text-white rounded-md transition-colors duration-300 flex justify-center items-center"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
-              View Details
+              Apply for adoption
             </motion.button>
-          </Link>
+          </button>
           
           {/* Split button design */}
           <div className="col-span-4 grid grid-cols-2 gap-2">
