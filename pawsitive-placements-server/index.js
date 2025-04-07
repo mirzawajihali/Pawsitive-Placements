@@ -64,6 +64,7 @@ async function run() {
 
     const petsCollection = client.db("PawsitivePlacements").collection("pets");
     const reviewsCollection = client.db("PawsitivePlacements").collection("reviews");
+    const applicationCollection = client.db("PawsitivePlacements").collection("application");
 
 
     // Send a ping to confirm a successful connection
@@ -144,6 +145,19 @@ async function run() {
         });
       }
     });
+
+
+    app.post("/application", async(req, res) =>{
+      try {
+        const newApplication = req.body;
+        
+        const result = await applicationCollection.insertOne(newApplication);
+        res.send(result);
+      } catch (error) {
+        console.error("Error adding application:", error);
+        res.status(500).send({ error: "Failed to add application" });
+      }
+    })
 
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");

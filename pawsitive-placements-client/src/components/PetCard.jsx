@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Provider/AuthProvider';
 import Swal from 'sweetalert2';
 
@@ -9,6 +9,7 @@ const PetCard = ({ pet }) => {
 
   const {user} = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
 
   // Default pet data if none provided
   const defaultPet = {
@@ -56,7 +57,7 @@ const PetCard = ({ pet }) => {
         cancelButtonText: "Cancel"
       }).then((result) => {
         if (result.isConfirmed) {
-          navigate("/login") // Navigate to login page
+          navigate("/login" , {state : {from : location}}) // Navigate to login page
         }
       });
       

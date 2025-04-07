@@ -2,10 +2,12 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
-const UnauthorizedAccess = () => {
+const UnauthorizedAccess = ({location}) => {
   const navigate = useNavigate();
 
-  const handleLogin = () => navigate('/login');
+
+
+  const handleLogin = () =>   navigate("/login" , {state : {from : location}});
   
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#353E43] to-[#1E2529] flex flex-col items-center justify-center p-6">

@@ -5,6 +5,8 @@ import UnauthorizedAccess from '../components/UnauthorizedAccess';
 
 const PrivateRoute = ({children}) => {
 
+    const location = useLocation()
+
     const {user, loading} = useContext(AuthContext);
    
 
@@ -15,7 +17,7 @@ const PrivateRoute = ({children}) => {
         return children
     }
     return (
-       <UnauthorizedAccess></UnauthorizedAccess>
+       <UnauthorizedAccess location ={location}></UnauthorizedAccess>
     )
 };
 

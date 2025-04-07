@@ -16,10 +16,10 @@ const Login = () => {
  const [disabled, setDisabled] = useState(true);
   const { signInWithEmail, setUser} = useContext(AuthContext);
   const [captcha, setCaptcha] = useState(false);
-  // const location = useLocation();
+  const location = useLocation();
   const navigate = useNavigate();
-  // const from = location?.state?.from?.pathname || '/';
-  const from = '/';
+  const from = location?.state?.from?.pathname || '/';
+
 
   const {register, handleSubmit, formState: {errors}, watch} = useForm();
 

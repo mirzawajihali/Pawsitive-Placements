@@ -19,10 +19,10 @@ const Register = () => {
 
   const {createUser, setUser, updateUserProfile} = useContext(AuthContext)
 
-  // const location = useLocation();
+  const location = useLocation();
   const navigate = useNavigate();
-  // const from = location?.state?.from?.pathname || '/';
-  const from =  '/';
+  const from = location?.state?.from?.pathname || '/';
+  
   
 
   const handleChange = (e) => {

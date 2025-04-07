@@ -1,10 +1,14 @@
+import axios from 'axios';
 import { useState } from 'react';
 import { useParams, useNavigate, useLoaderData } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const PetDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const pet = useLoaderData();
+
+  
   
   // In a real app, you would fetch this data from an API using the id
   const {
@@ -51,10 +55,22 @@ const PetDetailPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here you would typically send the form data to your backend
-    console.log('Adoption request submitted:', { petId: id, ...formData });
-    alert('Adoption request submitted successfully!');
-    navigate('/thank-you');
+    axios.post("http://localhost:3000/application", { petId: _id, ...formData })
+    .then(res => {
+      if(res.data.insertedId){
+        Swal.fire({
+          title: "Success!",
+          text: "Congratulations you succesfully applied for this pet adoption",
+          imageUrl: "https://i.pinimg.com/736x/00/af/60/00af601b947285d31fa1ba13d6e89d78.jpg",
+          imageWidth: 400,
+          imageHeight: 200,
+          imageAlt: "Custom image"
+        });
+        navigate("/")
+      }
+    })
+
+    
   };
 
   return (
