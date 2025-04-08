@@ -159,6 +159,33 @@ async function run() {
       }
     })
 
+
+    app.get('/application', async(req, res)=>{
+      const email = req.query.email;
+      const query = {email: email};
+
+     
+     
+      const result =await applicationCollection.find(query).toArray() ;
+
+      for(const application of result){
+          const petQuery = {_id: new ObjectId(application.petId)};
+          const pet = await petsCollection.findOne(petQuery);
+         if(pet){
+         application.petName = pet.name;
+         application.category = pet.category;
+         application.location = pet.location;
+         application.adoptionFee = pet.adoptionFee;
+         application.image = pet.image;
+         application.breed = pet.breed;
+       
+         
+         }
+      }
+    
+      res.send(result);
+  })
+
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {

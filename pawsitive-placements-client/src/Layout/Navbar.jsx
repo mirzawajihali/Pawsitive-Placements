@@ -68,7 +68,7 @@ const Navbar = () => {
               }`}>
                 Contact
               </Link>
-              <Link to="/" className={`px-3 py-2 rounded-md text-sm font-medium ${
+              <Link to="/myAdoption" className={`px-3 py-2 rounded-md text-sm font-medium ${
                 isScrolled ? 'text-[#041E2B] hover:text-[#B9D9EB]' : 'text-white hover:text-[#B9D9EB]'
               }`}>
                 <button className="btn btn-sm">

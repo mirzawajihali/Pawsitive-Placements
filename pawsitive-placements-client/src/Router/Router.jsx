@@ -13,6 +13,9 @@ import Register from '../components/Register';
 import PrivateRoute from './PrivateRoute';
 import Pets from '../Pages/Pets';
 import PetDetailPage from '../components/PetDetailPage';
+import MyAdoption from '../components/MyAdoption';
+
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -42,6 +45,11 @@ import PetDetailPage from '../components/PetDetailPage';
         {
             path: "/contact",
             element:<ContactUs></ContactUs>,
+
+        },
+        {
+            path: "/myAdoption",
+            element:<MyAdoption></MyAdoption>,
 
         },
       {
