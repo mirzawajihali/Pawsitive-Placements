@@ -14,6 +14,7 @@ import PrivateRoute from './PrivateRoute';
 import Pets from '../Pages/Pets';
 import PetDetailPage from '../components/PetDetailPage';
 import MyAdoption from '../components/MyAdoption';
+import Dashboard from '../Dashboard/Dashboard';
 
 
   const router = createBrowserRouter([
@@ -65,6 +66,15 @@ import MyAdoption from '../components/MyAdoption';
 
       ]
     },
+    {
+      path: "dashboard",
+      element: <Dashboard></Dashboard>,
+      children: [
+        
+
+      ]
+    },
+    
     
   ]);
 
