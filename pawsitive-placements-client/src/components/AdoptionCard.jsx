@@ -1,113 +1,162 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaTrash, FaUser, FaHome, FaEye, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaTrash, FaPaw, FaHome, FaUser, FaDollarSign, FaMapMarkerAlt, FaInfoCircle } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import useMyApplication from '../hooks/useMyApplication';
+import useAxiosSecure from '../hooks/useAxiosSecure';
+import Swal from 'sweetalert2';
+
 
 const AdoptionCard = ({ application }) => {
     const {
-        fullName, email, phone, image, petName, breed, category, adoptionFee, location,
+        _id, fullName, email, phone, image, petName, breed, category, adoptionFee, location,
         address, occupation, adoptionReason, petExperience, livingSituation
     } = application;
 
+    const [, refetch] = useMyApplication();
+    const axiosSecure = useAxiosSecure();
+
+
     const handleDelete =()=>{
-console.log("hello")
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                axiosSecure.delete(`/application/${_id}`)
+                    .then(res => {
+                        if (res.data.deletedCount > 0) {
+                            refetch();
+                            Swal.fire({
+                                title: "Deleted!",
+                                text: "Your file has been deleted.",
+                                icon: "success"
+                            });
+                        }
+                    })
+            }
+        });
     }
 
     return (
         <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        whileHover={{ scale: 1.02 }}
+        whileHover={{ scale: 1.01 }}
         transition={{ duration: 0.3 }}
-        className="w-full max-w-4xl bg-[#93B1B5] rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 border border-[#4F7C82] flex"
+        className="w-full bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 border border-[#93B1B5] flex flex-col md:flex-row"
       >
-        {/* Image Section */}
-        <div className="w-1/3 relative overflow-hidden min-h-[200px]">
-          <motion.img 
-            src={image} 
-            alt={petName} 
+        {/* Pet Image Section */}
+        <div className="md:w-2/5 relative overflow-hidden h-48 md:h-auto">
+          <motion.img
+            src={image}
+            alt={petName}
             className="w-full h-full object-cover"
-            whileHover={{ scale: 1.1 }}
+            whileHover={{ scale: 1.05 }}
             transition={{ duration: 0.5 }}
           />
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0B2E33] to-transparent p-3">
-            <h2 className="text-xl font-bold text-[#B8E3E9]">{petName}</h2>
-            <p className="text-[#B8E3E9]/80 text-sm">{breed}</p>
+          <div className="absolute top-0 left-0 right-0 bg-gradient-to-b from-black/30 to-transparent p-3 flex justify-between items-start">
+            <span className="bg-[#0B2E33] text-[#B8E3E9] text-xs font-semibold px-2 py-1 rounded-full">
+              {category}
+            </span>
+          
           </div>
-          <span className="absolute top-3 right-3 bg-[#4F7C82] text-[#B8E3E9] text-xs font-semibold px-2 py-1 rounded-full">
-            {category}
-          </span>
         </div>
   
-        {/* Details Section */}
-        <div className="w-2/3 p-4 flex flex-col relative">
-          {/* Delete Button */}
-          <button 
-            onClick={handleDelete}
-            className="absolute top-3 right-3 text-[#0B2E33] hover:text-[#4F7C82] transition-colors"
-            aria-label="Delete"
-          >
-            <FaTrash />
-          </button>
-  
-          {/* Top Row */}
-          <div className="flex justify-between items-start mb-3">
-            <div className="flex items-center text-[#0B2E33]">
-              <FaMapMarkerAlt className="mr-1" />
-              <span className="text-sm">{location}</span>
+        {/* Content Section */}
+        <div className="md:w-3/5 p-4 flex flex-col">
+          {/* Pet Header */}
+          <div className="flex justify-between items-start mb-2">
+            <div>
+              <h2 className="text-2xl font-bold text-[#0B2E33]">{petName}</h2>
+              <p className="text-[#4F7C82]">{breed}</p>
             </div>
-            <span className="bg-[#B8E3E9] text-[#0B2E33] text-sm font-semibold px-2.5 py-0.5 rounded">
-              ৳{adoptionFee}
+            <span className="bg-[#B8E3E9] text-[#0B2E33] font-semibold px-3 py-1 rounded-full flex items-center">
+              <FaDollarSign className="mr-1" /> {adoptionFee}
             </span>
           </div>
   
-          {/* Middle Section */}
-          <div className="grid grid-cols-2 gap-3 mb-4">
-            <div>
-              <h3 className="text-md font-semibold text-[#0B2E33] mb-1 flex items-center">
-                <FaUser className="mr-2" />
-                Applicant
-              </h3>
-              <div className="space-y-1 text-sm pl-6 text-[#0B2E33]">
-                <p><span className="font-medium">Name:</span> {fullName}</p>
-                <p><span className="font-medium">Phone:</span> {phone}</p>
-                <p><span className="font-medium">Email:</span> {email}</p>
-              </div>
+          {/* Pet Details */}
+          {/* <div className="grid grid-cols-2 gap-3 mb-4">
+            <div className="flex items-center text-sm text-[#4F7C82]">
+              <FaPaw className="mr-2 text-[#0B2E33]" />
+              <span>Age: {age}</span>
             </div>
-  
-            <div>
-              <h3 className="text-md font-semibold text-[#0B2E33] mb-1 flex items-center">
-                <FaHome className="mr-2" />
-                Details
-              </h3>
-              <div className="space-y-1 text-sm pl-6 text-[#0B2E33]">
-                <p><span className="font-medium">Occupation:</span> {occupation}</p>
-                <p><span className="font-medium">Address:</span> {address}</p>
-                <p><span className="font-medium">Living:</span> {livingSituation.replace(/_/g, ' ')}</p>
+            <div className="flex items-center text-sm text-[#4F7C82]">
+              <FaPaw className="mr-2 text-[#0B2E33]" />
+              <span>Gender: {gender}</span>
+            </div>
+            <div className="flex items-center text-sm text-[#4F7C82]">
+              <FaPaw className="mr-2 text-[#0B2E33]" />
+              <span>Health: {healthStatus}</span>
+            </div>
+            <div className="flex items-center text-sm text-[#4F7C82]">
+              <FaPaw className="mr-2 text-[#0B2E33]" />
+              <span>Temperament: {temperament}</span>
+            </div>
+            {specialNeeds && (
+              <div className="col-span-2 flex items-start text-sm text-[#4F7C82]">
+                <FaInfoCircle className="mr-2 text-[#0B2E33] mt-0.5" />
+                <span>Special Needs: {specialNeeds}</span>
               </div>
+            )}
+          </div> */}
+  
+          {/* Location */}
+          <div className="flex items-center text-sm text-[#4F7C82] mb-3">
+            <FaMapMarkerAlt className="mr-2 text-[#0B2E33]" />
+            <span>{location}</span>
+          </div>
+  
+          {/* Divider */}
+          <div className="border-t border-[#93B1B5] my-2"></div>
+  
+          {/* Applicant Info (condensed) */}
+          <div className="mb-2">
+            <h3 className="text-sm font-semibold text-[#0B2E33] flex items-center mb-1">
+              <FaUser className="mr-2" />
+              Applicant: {fullName}
+            </h3>
+            <div className="grid grid-cols-2 gap-1 text-xs text-gray-600 pl-6">
+              <p>Phone: {phone}</p>
+              <p>Experience: {petExperience}</p>
             </div>
           </div>
   
-          {/* Bottom Section */}
-          <div className="mt-auto">
-            <div className="mb-3">
-              <h3 className="text-md font-semibold text-[#0B2E33] mb-1">
-                Adoption Reason
-              </h3>
-              <p className="text-sm text-[#0B2E33] line-clamp-2">
-                {adoptionReason}
-              </p>
-            </div>
+          {/* View Details Button */}
+        <div className='flex mt-auto gap-4 '>
+        <Link to={`/pets/${_id}`}    className="bg-[#0B2E33] hover:bg-[#4F7C82] text-white font-medium py-2 px-4 rounded-lg transition-colors text-center duration-300 flex-1 text-sm"
+    >  <motion.button
+    
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
+    className='flex'
+    >
+      <FaInfoCircle className="mr-2" />
+      View Details
+    </motion.button></Link>
+
+    <motion.button
+      onClick={handleDelete}
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
   
-            <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.98 }}
-              className="w-full bg-[#4F7C82] hover:bg-[#0B2E33] text-[#B8E3E9] font-medium py-2 px-4 rounded-lg transition-all duration-300 flex items-center justify-center text-sm"
+    
+              className="text-red-600 hover:text-red-800 transition-colors p-1"
+              aria-label="Delete"
             >
-              <FaEye className="mr-2" />
-              View Full Details
-            </motion.button>
-          </div>
+              <FaTrash className="text-lg" />
+            
+    </motion.button>
         </div>
+        </div>
+        
       </motion.div>
     );
 };

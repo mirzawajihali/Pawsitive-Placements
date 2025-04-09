@@ -182,6 +182,15 @@ async function run() {
          
          }
       }
+
+
+      app.delete("/application/:id", async(req, res) =>{
+        const id = req.params.id;
+        const query = { _id: new ObjectId(id) }
+        const result = await applicationCollection.deleteOne(query);
+        res.send(result);
+
+      })
     
       res.send(result);
   })
