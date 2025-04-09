@@ -1,34 +1,39 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../Provider/AuthProvider';
 
-import axios from 'axios';
+
 import AdoptionCard from './AdoptionCard';
 import UserCard from './UserCard';
+import useMyApplication from '../hooks/useMyApplication';
 
 const MyAdoption = () => {
-    const {user} = useContext(AuthContext);
-    const [applications, setApplications] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const {user, loading} = useContext(AuthContext);
+    
+    
+
+    const [application, refetch] = useMyApplication();
    
 
-    useEffect(() => {
-        if (user?.email) {
-            setLoading(true);
-            axios.get(`http://localhost:3000/application?email=${user.email}`)
+    // useEffect(() => {
+    //     if (user?.email) {
+    //         setLoading(true);
+    //         axios.get(`http://localhost:3000/application?email=${user.email}`)
 
 
-                .then(res => {
-                    setApplications(res.data);
-                    console.log(res.data); // instead of console.log(applications)
-                    setLoading(false);
-                })
-                .catch(err => {
-                    setError(err.response?.data?.message || 'Failed to fetch applications');
-                    setLoading(false);
-                });
-        }
-    }, [user?.email]);
+    //             .then(res => {
+    //                 setApplications(res.data);
+    //                 console.log(res.data); // instead of console.log(applications)
+    //                 setLoading(false);
+    //             })
+    //             .catch(err => {
+    //                 setError(err.response?.data?.message || 'Failed to fetch applications');
+    //                 setLoading(false);
+    //             });
+    //     }
+    // }, [user?.email]);
+
+  
+   
 
     if (loading) return <div className='min-h-full'>
          <div className="max-w-7xl h-16 mx-auto bg-black"></div>
@@ -37,7 +42,7 @@ const MyAdoption = () => {
          </div>
 
         </div>;
-    if (error) return <div>Error: {error}</div>;
+    // if (error) return <div>Error: {error}</div>;
 
     return (
         <div className='max-w-7xl mx-auto'>
@@ -45,7 +50,7 @@ const MyAdoption = () => {
             <UserCard className=" "></UserCard>
             <h1 className="text-2xl font-bold mb-6">My Adoption Requests</h1>
             <div className="grid lg:grid-cols-2  grid-cols-1 gap-6 m-4">
-                {applications.map((application, index) => (
+                {application.map((application, index) => (
                     <AdoptionCard 
                         key={index} 
                         application={application} 

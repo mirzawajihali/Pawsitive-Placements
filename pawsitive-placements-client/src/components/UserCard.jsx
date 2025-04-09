@@ -7,7 +7,7 @@ const UserCard = () => {
     return (
         
            
-  <div className="card card-side bg-base-100 my-10 shadow-xl w-full max-w-6xl mx-auto">
+  <div className="card card-side flex-col lg:flex-row bg-base-100 my-10 shadow-xl w-full max-w-6xl mx-auto">
     {/* Avatar Section */}
     <figure className="p-6 min-w-[150px] flex items-center justify-center">
       {user?.photoURL ? (
