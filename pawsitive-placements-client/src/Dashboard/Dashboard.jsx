@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { Outlet, Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+
 import { 
   FaHome, FaBars, FaTimes, FaArrowLeft, FaPaw, 
   FaFileAlt, FaUsers, FaCog, FaSignOutAlt 

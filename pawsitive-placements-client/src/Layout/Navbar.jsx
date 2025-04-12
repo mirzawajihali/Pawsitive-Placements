@@ -68,11 +68,11 @@ const Navbar = () => {
               }`}>
                 Contact
               </Link>
-              <Link to="/myAdoption" className={`px-3 py-2 rounded-md text-sm font-medium ${
+              <Link to="/dashboard" className={`px-3 py-2 rounded-md text-sm font-medium ${
                 isScrolled ? 'text-[#041E2B] hover:text-[#B9D9EB]' : 'text-white hover:text-[#B9D9EB]'
               }`}>
                 <button className="btn btn-sm">
-  Adoption <div className="badge badge-sm bg-[#B9D9EB] "><PiDogBold /></div>
+  Dashboard <div className="badge badge-sm bg-[#B9D9EB] "><PiDogBold /></div>
 </button>
               </Link>
             </div>

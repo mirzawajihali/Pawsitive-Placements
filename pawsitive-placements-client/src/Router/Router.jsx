@@ -48,11 +48,7 @@ import Dashboard from '../Dashboard/Dashboard';
             element:<ContactUs></ContactUs>,
 
         },
-        {
-            path: "/myAdoption",
-            element:<MyAdoption></MyAdoption>,
-
-        },
+       
       {
         path: "/login",
         element:<Login></Login>,
@@ -68,10 +64,14 @@ import Dashboard from '../Dashboard/Dashboard';
     },
     {
       path: "dashboard",
-      element: <Dashboard></Dashboard>,
+      element:<PrivateRoute> <Dashboard></Dashboard></PrivateRoute>,
       children: [
         
+        {
+          path: "/dashboard/myAdoption",
+          element:<MyAdoption></MyAdoption>,
 
+      },
       ]
     },
     
