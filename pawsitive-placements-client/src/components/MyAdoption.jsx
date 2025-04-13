@@ -36,7 +36,7 @@ const MyAdoption = () => {
    
 
     if (loading) return <div className='min-h-full'>
-         <div className="max-w-7xl h-16 mx-auto bg-black"></div>
+         <div className="max-w-5xl h-16 mx-auto bg-black"></div>
          <div className='flex justify-center items-center'>
          <span className="loading loading-bars loading-xl"></span>
          </div>
@@ -47,8 +47,8 @@ const MyAdoption = () => {
 
     if(application.length == 0){
         return (
-            <div className='max-w-7xl mx-auto'>
-            <div className="max-w-7xl h-16 mx-auto bg-black"></div>
+            <div className='max-w-5xl mx-auto'>
+            <div className="max-w-5xl h-16 mx-auto bg-black"></div>
             <UserCard className=" "></UserCard>
             <h1 className="text-2xl text-center font-bold mb-6">You dont have any application Requests yet</h1>
            

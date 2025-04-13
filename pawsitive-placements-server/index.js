@@ -92,6 +92,11 @@ async function run() {
       res.send(user)
     })
 
+    app.get("/users", async(req, res) => {
+      const users = await usersCollection.find().toArray();
+      res.send(users);
+    })
+
     app.get('/pets', async (req, res) => {
       const searchBreed = req.query?.searchBreed;
       let query = {};
