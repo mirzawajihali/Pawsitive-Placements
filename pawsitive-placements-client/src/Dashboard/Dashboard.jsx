@@ -28,8 +28,8 @@ const Dashboard = () => {
   const navItems = [
     { path: '/dashboard', label: 'Overview', icon: <FaHome /> },
     { path: '/dashboard/pets', label: 'Pets', icon: <FaPaw /> },
-    { path: '/dashboard/applications', label: 'Applications', icon: <FaFileAlt /> },
-    { path: '/dashboard/users', label: 'Users', icon: <FaUsers /> },
+    { path: '/dashboard/myAdoption', label: 'My Applications', icon: <FaFileAlt /> },
+    { path: '/dashboard/addReview', label: 'Add Review', icon: <FaUsers /> },
     { path: '/dashboard/settings', label: 'Settings', icon: <FaCog /> },
   ];
 

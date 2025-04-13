@@ -4,11 +4,13 @@ import { motion } from 'framer-motion';
 import { AuthContext } from '../Provider/AuthProvider';
 import { FaGoogle } from 'react-icons/fa';
 import { useLocation, useNavigate } from 'react-router-dom';
+import useAxiosPublic from '../hooks/useAxiosPublic';
 
 const SocialLogin = () => {
 
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const axiosPublic = useAxiosPublic();
   
     const {signInWithGoogle, setUser} = useContext(AuthContext);
     // const location = useLocation();
@@ -23,8 +25,20 @@ const SocialLogin = () => {
       const user = result.user;
       setUser(user);
 
+      const userInfo ={
+        email : user.email,
+        name : user.displayName
+
+      }
+
+      axiosPublic.post("/users", userInfo)
+      .then(res => {
+        console.log(res.data)
+        navigate(from);
+      })
+
      
-       navigate(from);
+      
 
     })
     .catch((error) => {

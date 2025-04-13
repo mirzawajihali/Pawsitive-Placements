@@ -4,8 +4,10 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaGoogle } from 'react-icons/fa';
 import SocialLogin from './SocialLogin';
 import { AuthContext } from '../Provider/AuthProvider';
+import useAxiosPublic from '../hooks/useAxiosPublic';
 
 const Register = () => {
+  const axiosPublic = useAxiosPublic();
   const [formData, setFormData] = useState({
     name: '',
     photo:'',
@@ -96,8 +98,24 @@ const Register = () => {
               console.log("user profile updated")
             })
             .catch(error => console.log(error))
-         
-            navigate("/");
+
+            const userInfo ={
+              name : name,
+              email : email,
+              photo : photo,
+
+
+            }
+            
+            axiosPublic.post('/users', userInfo)
+            .then(res =>{
+              if(res.data.insertedId){
+                navigate("/");
+              }
+            })
+            
+          
+            
         })
         .catch(error =>{
             console.log(error);

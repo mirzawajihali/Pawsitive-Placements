@@ -15,6 +15,7 @@ import Pets from '../Pages/Pets';
 import PetDetailPage from '../components/PetDetailPage';
 import MyAdoption from '../components/MyAdoption';
 import Dashboard from '../Dashboard/Dashboard';
+import AddReview from '../components/AddReview';
 
 
   const router = createBrowserRouter([
@@ -68,8 +69,13 @@ import Dashboard from '../Dashboard/Dashboard';
       children: [
         
         {
-          path: "/dashboard/myAdoption",
+          path: "myAdoption",
           element:<MyAdoption></MyAdoption>,
+
+      },
+        {
+          path: "addReview",
+          element:<AddReview></AddReview>,
 
       },
       ]

@@ -65,9 +65,32 @@ async function run() {
     const petsCollection = client.db("PawsitivePlacements").collection("pets");
     const reviewsCollection = client.db("PawsitivePlacements").collection("reviews");
     const applicationCollection = client.db("PawsitivePlacements").collection("application");
+    const usersCollection = client.db("PawsitivePlacements").collection("users");
 
 
     // Send a ping to confirm a successful connection
+
+
+
+    app.post("/users", async(req, res) => {
+      const user = req.body;
+
+       // inser email is user doesnt exists;
+
+      const query = {email : user.email}
+      const existingUser = await usersCollection.findOne(query)
+
+      if(existingUser){
+        return res.send({message : "user already exists", insertedId : null})
+      }
+
+
+      const result = await usersCollection.insertOne(user);
+
+    
+      
+      res.send(user)
+    })
 
     app.get('/pets', async (req, res) => {
       const searchBreed = req.query?.searchBreed;
