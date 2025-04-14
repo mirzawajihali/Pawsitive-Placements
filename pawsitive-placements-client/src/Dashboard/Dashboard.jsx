@@ -11,7 +11,8 @@ import { AuthContext } from '../Provider/AuthProvider';
 import useAdmin from '../hooks/useAdmin';
 
 const Dashboard = () => {
-  const isAdmin = useAdmin();
+  const isAdminHook = useAdmin([]);
+  const isAdmin = isAdminHook[0];
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [isDesktopNavCollapsed, setIsDesktopNavCollapsed] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
