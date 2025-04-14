@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
 const multer = require('multer');
 const cloudinary = require('cloudinary').v2;
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
@@ -72,6 +73,38 @@ async function run() {
 
 
 
+
+    // middleware 
+    const verifyToken = (req, res, next) => {
+      console.log("inside verify token",req.headers.authorization);
+      if(!req.headers.authorization){
+        return res.status(401).send({message : "forbidden access"});
+      }
+      const token = req.headers.authorization.split(' ')[1];
+      
+      jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) =>{
+        if(err){
+          return res.status(401).send({message : "forbidden access"});
+        }
+
+        req.decoded = decoded;
+        next();
+      })
+      
+    
+    }
+
+    app.post('/jwt', async(req, res) =>{
+      const user = req.body;
+      
+      const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
+        expiresIn : '1h'
+      })
+
+      res.send({token});
+    })
+
+
     app.post("/users", async(req, res) => {
       const user = req.body;
 
@@ -92,7 +125,8 @@ async function run() {
       res.send(user)
     })
 
-    app.get("/users", async(req, res) => {
+    app.get("/users",verifyToken, async(req, res) => {
+      
       const users = await usersCollection.find().toArray();
       res.send(users);
     })

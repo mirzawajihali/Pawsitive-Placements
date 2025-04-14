@@ -14,7 +14,7 @@ const PrivateRoute = ({children}) => {
         <span class="loading loading-bars loading-xl"></span>
     }
     if(user){
-        return children
+        return children;
     }
     return (
        <UnauthorizedAccess location ={location}></UnauthorizedAccess>
