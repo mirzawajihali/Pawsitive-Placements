@@ -8,15 +8,18 @@ import {
   FaUserFriends
 } from 'react-icons/fa';
 import { AuthContext } from '../Provider/AuthProvider';
+import useAdmin from '../hooks/useAdmin';
 
 const Dashboard = () => {
-  const isAdmin = true;
+  const isAdmin = useAdmin();
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [isDesktopNavCollapsed, setIsDesktopNavCollapsed] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const navigate = useNavigate();
   const {user} = useContext(AuthContext);
   const sidebarRef = useRef(null);
+
+  console.log(isAdmin);
 
   // Handle window resize
   useEffect(() => {
