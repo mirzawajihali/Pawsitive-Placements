@@ -198,6 +198,12 @@ async function run() {
         res.send(pets);
     });
 
+    app.post('/pets', async(req, res )=>{
+      const pet = req.body;
+      const result = await petsCollection.insertOne(pet);
+      res.send(result);
+    })
+
     app.get("/pets/:id", async(req, res)=>{
       const id = req.params.id;
       const query = {_id: new ObjectId(id)};

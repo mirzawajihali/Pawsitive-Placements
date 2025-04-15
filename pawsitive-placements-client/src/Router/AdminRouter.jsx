@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import useAdmin from '../hooks/useAdmin';
 import { AuthContext } from '../Provider/AuthProvider';
-import { useLocation } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 
 const AdminRouter = ({children}) => {
 
@@ -16,7 +16,7 @@ const AdminRouter = ({children}) => {
         return children;
     }
     return (
-       <UnauthorizedAccess location ={location}></UnauthorizedAccess>
+      <Navigate to="/" state={{from : location}} replace></Navigate>
     )
 };
 

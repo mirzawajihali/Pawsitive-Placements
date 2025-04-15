@@ -17,6 +17,8 @@ import MyAdoption from '../components/MyAdoption';
 import Dashboard from '../Dashboard/Dashboard';
 import AddReview from '../components/AddReview';
 import AllUsers from '../Dashboard/D-Components/AllUsers';
+import AdminRouter from './AdminRouter';
+import AddPets from '../Dashboard/D-Components/AddPets';
 
 
   const router = createBrowserRouter([
@@ -84,7 +86,12 @@ import AllUsers from '../Dashboard/D-Components/AllUsers';
       // for admin
         {
           path: "users",
-          element:<AllUsers></AllUsers>,
+          element:<AdminRouter><AllUsers></AllUsers></AdminRouter>,
+
+      },
+        {
+          path: "addPets",
+          element:<AdminRouter><AddPets></AddPets></AdminRouter>,
 
       },
       ]

@@ -220,12 +220,12 @@ const Dashboard = () => {
                         </li>
                         <li>
                           <Link
-                            to={"/dashboard/managePets"}
+                            to={"/dashboard/addPets"}
                             className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#4F7C82] transition-colors whitespace-nowrap"
                             onClick={closeMobileNav}
                           >
                             <span className="text-lg"><FaPaw /></span>
-                            {(!isDesktopNavCollapsed || isMobile) && <span>Manage Pets</span>}
+                            {(!isDesktopNavCollapsed || isMobile) && <span>Add Pets</span>}
                           </Link>
                         </li>
                       </>
