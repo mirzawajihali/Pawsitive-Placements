@@ -19,6 +19,7 @@ import AddReview from '../components/AddReview';
 import AllUsers from '../Dashboard/D-Components/AllUsers';
 import AdminRouter from './AdminRouter';
 import AddPets from '../Dashboard/D-Components/AddPets';
+import Donate from '../components/Donate';
 
 
   const router = createBrowserRouter([
@@ -50,6 +51,11 @@ import AddPets from '../Dashboard/D-Components/AddPets';
         {
             path: "/contact",
             element:<ContactUs></ContactUs>,
+
+        },
+        {
+            path: "/donate",
+            element:<Donate></Donate>,
 
         },
        

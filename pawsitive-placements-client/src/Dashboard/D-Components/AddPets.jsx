@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { FaUpload, FaTrash } from 'react-icons/fa';
 import axios from 'axios';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import Swal from 'sweetalert2';
 
 
 const image_upload_key = import.meta.env.VITE_IMAGE_UPLOAD_KEY;
@@ -97,7 +98,24 @@ const AddPets = ({ pet = {}}) => {
       // 3. Now send petData to your backend
       const response = await axiosSecure.post('/pets', petData);
       if(response.data.insertedId>0){
-            console.log("success")
+        Swal.fire({
+            title: "You're not logged in!",
+            text: "Please login to continue.",
+            imageUrl: "https://cdn-icons-png.flaticon.com/512/565/565547.png", // Replace with your own image if needed
+            imageWidth: 100,
+            imageHeight: 100,
+            imageAlt: "Login required",
+            icon: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Login Now",
+            cancelButtonText: "Cancel"
+          }).then((result) => {
+            if (result.isConfirmed) {
+              navigate("/login" , {state : {from : location}}) // Navigate to login page
+            }
+          });
       }
       
       // 4. Reset form on success
@@ -106,7 +124,7 @@ const AddPets = ({ pet = {}}) => {
       setImageFile(null);
       
       // Show success message
-      alert('Pet added successfully!');
+     
       
     } catch (error) {
       console.error('Error:', error);

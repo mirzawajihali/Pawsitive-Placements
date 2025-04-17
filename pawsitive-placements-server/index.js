@@ -198,7 +198,7 @@ async function run() {
         res.send(pets);
     });
 
-    app.post('/pets', async(req, res )=>{
+    app.post('/pets',verifyToken, verifyAdmin, async(req, res )=>{
       const pet = req.body;
       const result = await petsCollection.insertOne(pet);
       res.send(result);
