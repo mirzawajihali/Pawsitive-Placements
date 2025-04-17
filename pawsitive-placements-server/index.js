@@ -2,11 +2,13 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
+
 const multer = require('multer');
 const cloudinary = require('cloudinary').v2;
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const port = process.env.PORT || 3000;
 require("dotenv").config();
+const stripe =require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 app.use(cors({
   origin: process.env.FRONTEND_URL || 'http://localhost:5173', // Your React app's URL
@@ -310,6 +312,22 @@ async function run() {
         res.send(result);
 
       })
+
+      app.post('/create-payment-intent', async (req, res) => {
+        const { price } = req.body;
+        const amount = parseInt(price * 100);
+        console.log(amount, 'amount inside the intent')
+  
+        const paymentIntent = await stripe.paymentIntents.create({
+          amount: amount,
+          currency: 'usd',
+          payment_method_types: ['card']
+        });
+  
+        res.send({
+          clientSecret: paymentIntent.client_secret
+        })
+      });
     
       res.send(result);
   })
