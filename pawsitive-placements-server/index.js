@@ -69,6 +69,7 @@ async function run() {
     const reviewsCollection = client.db("PawsitivePlacements").collection("reviews");
     const applicationCollection = client.db("PawsitivePlacements").collection("application");
     const usersCollection = client.db("PawsitivePlacements").collection("users");
+    const paymentsCollection = client.db("PawsitivePlacements").collection("payments");
 
 
     // Send a ping to confirm a successful connection
@@ -280,14 +281,11 @@ async function run() {
       }
     })
 
-
     app.get('/application', async(req, res)=>{
       const email = req.query.email;
       const query = {email: email};
-
      
-     
-      const result =await applicationCollection.find(query).toArray() ;
+      const result = await applicationCollection.find(query).toArray();
 
       for(const application of result){
           const petQuery = {_id: new ObjectId(application.petId)};
@@ -299,38 +297,41 @@ async function run() {
          application.adoptionFee = pet.adoptionFee;
          application.image = pet.image;
          application.breed = pet.breed;
-       
-         
          }
       }
-
-
-      app.delete("/application/:id", async(req, res) =>{
-        const id = req.params.id;
-        const query = { _id: new ObjectId(id) }
-        const result = await applicationCollection.deleteOne(query);
-        res.send(result);
-
-      })
-
-      app.post('/create-payment-intent', async (req, res) => {
-        const { price } = req.body;
-        const amount = parseInt(price * 100);
-        console.log(amount, 'amount inside the intent')
-  
-        const paymentIntent = await stripe.paymentIntents.create({
-          amount: amount,
-          currency: 'usd',
-          payment_method_types: ['card']
-        });
-  
-        res.send({
-          clientSecret: paymentIntent.client_secret
-        })
-      });
-    
+      
       res.send(result);
-  })
+    })
+
+    app.delete("/application/:id", async(req, res) =>{
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await applicationCollection.deleteOne(query);
+      res.send(result);
+    })
+
+    app.post('/create-payment-intent', async (req, res) => {
+      const { price } = req.body;
+      const amount = parseInt(price * 100);
+      console.log(amount, 'amount inside the intent')
+
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: amount,
+        currency: 'usd',
+        payment_method_types: ['card']
+      });
+
+      res.send({
+        clientSecret: paymentIntent.client_secret
+      })
+    });
+
+    app.post("/payments", async(req, res) => {
+      const payment = req.body;
+      const result = await paymentsCollection.insertOne(payment);
+      res.send(result);
+    })
+
 
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
