@@ -3,38 +3,49 @@ import {CardElement, useElements, useStripe} from '@stripe/react-stripe-js';
 import { AuthContext } from '../Provider/AuthProvider';
 import useAxiosPublic from '../hooks/useAxiosPublic';
 import useAxiosSecure from '../hooks/useAxiosSecure';
+
 const CheckOutForm = () => {
+  // State variables
   const [error, setError] = useState("");
   const [amount, setAmount] = useState(0);
   const [clientSecret, setClientSecret] = useState('');
   const [loading, setLoading] = useState(false);
+  const [processing, setProcessing] = useState(false); // Add separate processing state
   const {user} = useContext(AuthContext);
   const [transactionId, setTransactionId]= useState('');
 
-
+  // Hooks
   const stripe = useStripe();
   const elements = useElements();
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
 
+  // Reset states when amount changes
+  useEffect(() => {
+    setError("");
+    setTransactionId('');
+  }, [amount]);
+
+  // Get client secret when amount changes
   useEffect(() => {
     if (amount > 0) {
       setLoading(true);
       axiosPublic.post("/create-payment-intent", {price: amount})
         .then(res => {
-          console.log(res.data.clientSecret);
-          setClientSecret(res.data.clientSecret); // Fixed: was incorrectly using setClientSecret
-          setLoading(false);
+          console.log("Client secret received:", res.data.clientSecret);
+          setClientSecret(res.data.clientSecret);
         })
         .catch(err => {
           console.error("Payment intent error:", err);
           setError("Failed to connect to payment server. Please ensure the server is running.");
+        })
+        .finally(() => {
           setLoading(false);
         });
     }
   }, [axiosPublic, amount]);
 
-  const handleSubmit = async(event) => { // Added missing event parameter
+  const handleSubmit = async(event) => {
     event.preventDefault();
 
     if(!stripe || !elements){
@@ -47,7 +58,7 @@ const CheckOutForm = () => {
       return;
     }
 
-    setLoading(true);
+    setProcessing(true); // Use processing state instead of loading
     setError("");
 
     try {
@@ -57,14 +68,13 @@ const CheckOutForm = () => {
       });
 
       if(error){
-        console.log("payment error", error);
+        console.log("Payment method error:", error);
         setError(error.message);
-        setLoading(false);
+        setProcessing(false);
         return;
       }
-      else{
-        console.log("payment method ", paymentMethod);
-      }
+      
+      console.log("Payment method created:", paymentMethod);
 
       const {paymentIntent, error: confirmError} = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
@@ -77,40 +87,41 @@ const CheckOutForm = () => {
       });
 
       if(confirmError){
-        console.log("confirm error", confirmError);
+        console.log("Payment confirmation error:", confirmError);
         setError(confirmError.message);
+        setProcessing(false);
+        return;
       }
-      else{
-        console.log("payment intent ", paymentIntent);
-        if(paymentIntent.status === 'succeeded') {
-          setError("");
-          setTransactionId(paymentIntent.id);
+      
+      console.log("Payment intent confirmed:", paymentIntent);
+      if(paymentIntent.status === 'succeeded') {
+        // Set transaction ID first to update UI immediately
+        const paymentId = paymentIntent.id;
+        setTransactionId(paymentId);
+        
+        const payment = {
+          email: user.email,
+          price: amount,
+          date: new Date(),
+          transactionId: paymentId,
+        };
 
-          console.log(transactionId);
-
-          const payment ={
-            email : user.email,
-            price : amount,
-            date : new Date(),
-            transactionId : paymentIntent.id,
+        try {
+          const res = await axiosSecure.post('/payments', payment);
+          console.log("Payment saved to database:", res.data);
+          if(res.data.insertedId){
+            alert("Payment successful!");
           }
-
-          axiosSecure.post('/payments', payment)
-          .then(res => {
-            console.log(res.data);
-            if(res.data.insertedId){
-              alert("Payment successful!");
-            }
-          })
-
-          // You can add additional logic for successful payment here
+        } catch (serverError) {
+          console.error("Database error:", serverError);
+          // Don't show this error to user as payment was successful
         }
       }
     } catch (err) {
       console.error("Payment processing error:", err);
       setError("An error occurred while processing your payment");
     } finally {
-      setLoading(false);
+      setProcessing(false);
     }
   };
 
@@ -131,42 +142,51 @@ const CheckOutForm = () => {
             onChange={(e) => setAmount(Number(e.target.value))}
             placeholder="Enter amount"
             className="w-full px-3 py-2 border border-[#93B1B5] rounded-md focus:outline-none focus:ring-1 focus:ring-[#4F7C82] focus:border-[#4F7C82] text-[#0B2E33]"
+            disabled={processing}
           />
           <p className="text-sm text-[#4F7C82]">
             Current amount: <span className="font-medium">{amount}</span>
           </p>
         </div>
-        <CardElement
-          options={{
-            style: {
-              base: {
-                fontSize: '16px',
-                color: '#424770',
-                '::placeholder': {
-                  color: '#aab7c4',
+        
+        <div className={processing ? 'opacity-50' : ''}>
+          <CardElement
+            options={{
+              style: {
+                base: {
+                  fontSize: '16px',
+                  color: '#424770',
+                  '::placeholder': {
+                    color: '#aab7c4',
+                  },
+                },
+                invalid: {
+                  color: '#9e2146',
                 },
               },
-              invalid: {
-                color: '#9e2146',
-              },
-            },
-          }}
-        />
+              disabled: processing,
+            }}
+          />
+        </div>
+        
         <button 
           className='btn btn-sm btn-primary mt-4' 
           type="submit" 
-          disabled={!stripe || !clientSecret || loading || amount <= 0}
+          disabled={!stripe || !clientSecret || loading || processing || amount <= 0}
         >
-          {loading ? 'Processing...' : 'Pay'}
+          {processing ? 'Processing...' : loading ? 'Loading...' : 'Pay'}
         </button>
 
         {error && <p className='text-red-500 mt-2'>{error}</p>}
 
-        {
-          transactionId && (
-            <p className='text-green-500 mt-2'>Payment successful. Transaction ID: {transactionId}</p>
-          )
-        }
+        {transactionId && (
+          <div className='mt-4 p-3 bg-green-50 border border-green-200 rounded-md'>
+            <p className='text-green-600'>Payment successful!</p>
+            <p className='text-sm text-green-500'>
+              Transaction ID: <span className='font-mono'>{transactionId}</span>
+            </p>
+          </div>
+        )}
       </form>
     </div>
   );

@@ -259,7 +259,7 @@ async function run() {
           }
         });
       } catch (error) {
-        console.error("Review submission error:", error);
+       
         res.status(500).json({
           success: false,
           message: "Internal server error",
@@ -329,6 +329,16 @@ async function run() {
     app.post("/payments", async(req, res) => {
       const payment = req.body;
       const result = await paymentsCollection.insertOne(payment);
+      res.send(result);
+    })
+
+    app.get("/payments/:email",verifyToken, async(req, res) => {
+      const email = req.params.email;
+      const query = {email: email};
+      if(req.params.email !== req.decoded.email){
+        return res.status(403).send({message : 'forbidden access'});
+      }
+      const result = await paymentsCollection.find(query).toArray();
       res.send(result);
     })
 

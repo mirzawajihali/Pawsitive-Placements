@@ -5,7 +5,8 @@ import { IoDocuments } from "react-icons/io5";
 import { 
   FaHome, FaBars, FaTimes, FaArrowLeft, FaPaw, 
   FaFileAlt, FaUsers, FaCog, FaSignOutAlt, 
-  FaUserFriends
+  FaUserFriends,
+  FaMoneyBill
 } from 'react-icons/fa';
 import { AuthContext } from '../Provider/AuthProvider';
 import useAdmin from '../hooks/useAdmin';
@@ -59,6 +60,7 @@ const Dashboard = () => {
   const navItems = [
     { path: '/dashboard', label: 'Overview', icon: <FaHome /> },
     { path: '/dashboard/myAdoption', label: 'My Applications', icon: <FaFileAlt /> },
+    { path: '/dashboard/paymentHistory', label: 'Payment History', icon: <FaMoneyBill></FaMoneyBill> },
     { path: '/dashboard/addReview', label: 'Add Review', icon: <FaUsers /> },
     { path: '/dashboard/settings', label: 'Settings', icon: <FaCog /> },
   ];

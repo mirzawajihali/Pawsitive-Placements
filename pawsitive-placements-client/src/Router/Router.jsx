@@ -20,6 +20,7 @@ import AllUsers from '../Dashboard/D-Components/AllUsers';
 import AdminRouter from './AdminRouter';
 import AddPets from '../Dashboard/D-Components/AddPets';
 import Donate from '../components/Donate';
+import PaymentHistory from '../Dashboard/D-Components/PaymentHistory';
 
 
   const router = createBrowserRouter([
@@ -85,6 +86,11 @@ import Donate from '../components/Donate';
         {
           path: "addReview",
           element:<AddReview></AddReview>,
+
+      },
+        {
+          path: "paymentHistory",
+          element:<PaymentHistory></PaymentHistory>,
 
       },
 
