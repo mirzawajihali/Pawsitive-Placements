@@ -340,6 +340,28 @@ async function run() {
       }
       const result = await paymentsCollection.find(query).toArray();
       res.send(result);
+    }) 
+
+    app.get("/admin-stats", async(req, res)=>{
+      const user = await usersCollection.estimatedDocumentCount();
+      const pets = await petsCollection.estimatedDocumentCount();
+      const reviews = await reviewsCollection.estimatedDocumentCount();
+      const applications = await applicationCollection.estimatedDocumentCount();
+      const payments = await paymentsCollection.estimatedDocumentCount();
+
+
+      const result = await paymentsCollection.aggregate([
+        {
+          $group :{
+            _id : null,
+            totalDonation : {$sum : '$price'}
+          }
+        }
+      ]).toArray();
+
+      const donation = result.length>0 ? result[0].totalDonation : 0;
+
+      res.send({user, pets, reviews, applications, payments, donation});
     })
 
 

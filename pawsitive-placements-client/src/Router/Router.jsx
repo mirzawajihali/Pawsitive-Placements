@@ -21,6 +21,8 @@ import AdminRouter from './AdminRouter';
 import AddPets from '../Dashboard/D-Components/AddPets';
 import Donate from '../components/Donate';
 import PaymentHistory from '../Dashboard/D-Components/PaymentHistory';
+import UserHome from '../Dashboard/D-Components/UserHome';
+import AdminHome from '../Dashboard/D-Components/AdminHome';
 
 
   const router = createBrowserRouter([
@@ -79,6 +81,11 @@ import PaymentHistory from '../Dashboard/D-Components/PaymentHistory';
       children: [
         
         {
+          path: "userHome",
+          element:<UserHome></UserHome>,
+
+      },
+        {
           path: "myAdoption",
           element:<MyAdoption></MyAdoption>,
 
@@ -96,6 +103,11 @@ import PaymentHistory from '../Dashboard/D-Components/PaymentHistory';
 
 
       // for admin
+        {
+          path: "adminHome",
+          element:<AdminRouter><AdminHome></AdminHome></AdminRouter>,
+
+      },
         {
           path: "users",
           element:<AdminRouter><AllUsers></AllUsers></AdminRouter>,

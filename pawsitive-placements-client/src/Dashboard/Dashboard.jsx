@@ -58,7 +58,7 @@ const Dashboard = () => {
   const isMobile = windowWidth < 768;
 
   const navItems = [
-    { path: '/dashboard', label: 'Overview', icon: <FaHome /> },
+    {path : '/dashboard/userHome', label: 'User Home', icon: <FaHome />},
     { path: '/dashboard/myAdoption', label: 'My Applications', icon: <FaFileAlt /> },
     { path: '/dashboard/paymentHistory', label: 'Payment History', icon: <FaMoneyBill></FaMoneyBill> },
     { path: '/dashboard/addReview', label: 'Add Review', icon: <FaUsers /> },
@@ -198,8 +198,18 @@ const Dashboard = () => {
                 {/* Navigation Items */}
                 <nav className="flex-1">
                   <ul className="space-y-2">
-                    {isAdmin && (
+                    {isAdmin ? (
                       <>
+                        <li>
+                          <Link
+                            to={"/dashboard/adminHome"}
+                            className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#4F7C82] transition-colors whitespace-nowrap"
+                            onClick={closeMobileNav}
+                          >
+                            <span className="text-lg"><FaHome></FaHome></span>
+                            {(!isDesktopNavCollapsed || isMobile) && <span>Admin Home</span>}
+                          </Link>
+                        </li>
                         <li>
                           <Link
                             to={"/dashboard/users"}
@@ -231,20 +241,22 @@ const Dashboard = () => {
                           </Link>
                         </li>
                       </>
-                    )}
+                    )  : (
+                      navItems.map((item) => (
+                        <li key={item.path}>
+                          <Link
+                            to={item.path}
+                            className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#4F7C82] transition-colors whitespace-nowrap"
+                            onClick={closeMobileNav}
+                          >
+                            <span className="text-lg">{item.icon}</span>
+                            {(!isDesktopNavCollapsed || isMobile) && <span>{item.label}</span>}
+                          </Link>
+                        </li>
+                      ))
+                  )}
 
-                    {navItems.map((item) => (
-                      <li key={item.path}>
-                        <Link
-                          to={item.path}
-                          className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#4F7C82] transition-colors whitespace-nowrap"
-                          onClick={closeMobileNav}
-                        >
-                          <span className="text-lg">{item.icon}</span>
-                          {(!isDesktopNavCollapsed || isMobile) && <span>{item.label}</span>}
-                        </Link>
-                      </li>
-                    ))}
+                   
                   </ul>
                 </nav>
 
