@@ -44,6 +44,14 @@ const Header = () => {
                     Learn More
                   </Link>
                 </div>
+                <div className="mt-3 sm:mt-0 sm:ml-3">
+                  <Link
+                    to="/donate"
+                    className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-[#353E43] hover:bg-[#2d353a] transition-colors duration-300 md:py-4 md:text-lg md:px-10"
+                  >
+                   Donate 
+                  </Link>
+                </div>
               </div>
             </div>
           </main>

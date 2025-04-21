@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
+const axios = require('axios');
 
 const multer = require('multer');
 const cloudinary = require('cloudinary').v2;
@@ -16,6 +17,33 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); 
+
+
+
+
+
+
+
+
+
+
+ 
+// Store ID: pawsi680662612b158
+// Store Password (API/Secret Key): pawsi680662612b158@ssl
+
+
+// Merchant Panel URL: https://sandbox.sslcommerz.com/manage/ (Credential as you inputted in the time of registration)
+
+
+ 
+// Store name: testpawsild5n
+// Registered URL: www.pawsitiveplacements.com
+// Session API to generate transaction: https://sandbox.sslcommerz.com/gwprocess/v3/api.php
+// Validation API: https://sandbox.sslcommerz.com/validator/api/validationserverAPI.php?wsdl
+// Validation API (Web Service) name: https://sandbox.sslcommerz.com/validator/api/validationserverAPI.php
+ 
+// You may check our plugins available for multiple carts and libraries: https://github.com/sslcommerz
+ 
 
 
 const fileFilter = (req, file, cb) => {
@@ -341,6 +369,67 @@ async function run() {
       const result = await paymentsCollection.find(query).toArray();
       res.send(result);
     }) 
+
+
+    app.post("/create-ssl-payment", async(req, res) =>{
+      const payment = req.body;
+      console.log('payment info' , payment);
+
+      const trzid = new ObjectId().toString();
+      payment.transactionID = trzid;
+      const data = {
+        store_id : "pawsi680662612b158",
+        store_passwd : "pawsi680662612b158@ssl",
+        total_amount: payment.amount,
+        currency: 'BDT',
+        tran_id: 'REF123', // use unique tran_id for each api call
+        success_url: 'http://localhost:5001/success',
+        fail_url: 'http://localhost:5173/fail',
+        cancel_url: 'http://localhost:5173/cancel',
+        ipn_url: 'http://localhost:5001/ipn',
+        shipping_method: 'Courier',
+        product_name: 'Computer.',
+        product_category: 'Electronic',
+        product_profile: 'general',
+        cus_name: 'Customer Name',
+        cus_email:`${payment.email}`,
+        cus_add1: 'Dhaka',
+        cus_add2: 'Dhaka',
+        cus_city: 'Dhaka',
+        cus_state: 'Dhaka',
+        cus_postcode: '1000',
+        cus_country: 'Bangladesh',
+        cus_phone: '01711111111',
+        cus_fax: '01711111111',
+        ship_name: 'Customer Name',
+        ship_add1: 'Dhaka',
+        ship_add2: 'Dhaka',
+        ship_city: 'Dhaka',
+        ship_state: 'Dhaka',
+        ship_postcode: 1000,
+        ship_country: 'Bangladesh',
+    };
+
+    const iniResponse = await axios({
+      url : "https://sandbox.sslcommerz.com/gwprocess/v3/api.php",
+      method : "POST",  
+      data : data,
+      headers :{
+        "Content-Type" : 'application/x-www-form-urlencoded'
+      }
+    })
+
+    const result = await paymentsCollection.insertOne(payment);
+
+
+
+
+    const gatewayURL = iniResponse?.data?.GatewayPageURL;
+
+    console.log(gatewayURL, "gatewayURL");
+
+    res.send({url : gatewayURL});
+    })
 
     app.get("/admin-stats", async(req, res)=>{
       const user = await usersCollection.estimatedDocumentCount();
