@@ -30,7 +30,7 @@ const CheckOutForm = () => {
   useEffect(() => {
     if (amount > 0) {
       setLoading(true);
-      axiosPublic.post("/create-payment-intent", {price: amount})
+      axiosPublic.post("/create-payment-intent", {amount: amount})
         .then(res => {
           console.log("Client secret received:", res.data.clientSecret);
           setClientSecret(res.data.clientSecret);

@@ -17,7 +17,7 @@ app.use(cors({
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); 
-
+app.use(express.urlencoded())
 
 
 
@@ -383,10 +383,10 @@ async function run() {
         total_amount: payment.amount,
         currency: 'BDT',
         tran_id: 'REF123', // use unique tran_id for each api call
-        success_url: 'http://localhost:5001/success',
+        success_url: 'http://localhost:3000/success-payment',
         fail_url: 'http://localhost:5173/fail',
         cancel_url: 'http://localhost:5173/cancel',
-        ipn_url: 'http://localhost:5001/ipn',
+        ipn_url: 'http://localhost:3000/ipn',
         shipping_method: 'Courier',
         product_name: 'Computer.',
         product_category: 'Electronic',
@@ -430,6 +430,14 @@ async function run() {
 
     res.send({url : gatewayURL});
     })
+
+    app.post("/success-payment", async(req, res) => {
+      const paymentSuccess = req.body;
+      console.log("payment sucess info ", paymentSuccess)
+    }
+  )
+
+  
 
     app.get("/admin-stats", async(req, res)=>{
       const user = await usersCollection.estimatedDocumentCount();
