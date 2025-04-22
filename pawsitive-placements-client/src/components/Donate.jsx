@@ -17,12 +17,16 @@ const Donate = () => {
     const handleSSLCommerzPayment = async (e) => {
         e.preventDefault();
       const  amount = e.target.amount.value;
+      const phoneNumber = e.target.phone.value
       
         const payment = {
+            name : user.displayName,
             email : user.email,
+            phoneNumber : phoneNumber,
             amount : amount,
             status : "pending",
             date : new Date().toISOString(),
+
 
 
             

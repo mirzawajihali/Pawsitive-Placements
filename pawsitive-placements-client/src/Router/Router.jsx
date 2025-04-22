@@ -24,6 +24,7 @@ import PaymentHistory from '../Dashboard/D-Components/PaymentHistory';
 import UserHome from '../Dashboard/D-Components/UserHome';
 import AdminHome from '../Dashboard/D-Components/AdminHome';
 import SuccessPayment from '../components/SuccessPayment';
+import AllPayments from '../Dashboard/D-Components/AllPayments';
 
 
   const router = createBrowserRouter([
@@ -122,6 +123,11 @@ import SuccessPayment from '../components/SuccessPayment';
         {
           path: "addPets",
           element:<AdminRouter><AddPets></AddPets></AdminRouter>,
+
+      },
+        {
+          path: "allPayments",
+          element:<AdminRouter><AllPayments></AllPayments></AdminRouter>,
 
       },
       ]

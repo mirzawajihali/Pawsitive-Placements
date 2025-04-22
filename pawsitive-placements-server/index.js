@@ -361,6 +361,14 @@ async function run() {
       res.send(result);
     })
 
+    app.get("/payments", verifyToken, verifyAdmin, async(req, res) => {
+      const cursor =  paymentsCollection.find();
+      const payments = await cursor.toArray();
+      res.send(payments);
+
+     
+    })
+
     app.get("/payments/:email",verifyToken, async(req, res) => {
       const email = req.params.email;
       const query = {email: email};

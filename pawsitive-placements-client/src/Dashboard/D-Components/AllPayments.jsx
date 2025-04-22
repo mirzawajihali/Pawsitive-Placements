@@ -1,16 +1,16 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { AuthContext } from '../../Provider/AuthProvider';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 
-const PaymentHistory = () => {
-    const { user } = useContext(AuthContext);
+const AllPayments = () => {
+    
     const axiosSecure = useAxiosSecure();
     
     const { data: payments = [], isLoading, error } = useQuery({
-        queryKey: ['payments', user?.email],
+        queryKey: ['payments'],
         queryFn: async() => {
-            const res = await axiosSecure.get(`/payments/${user?.email}`);
+            const res = await axiosSecure.get(`/payments`);
             return res.data;
         }
     });
@@ -21,7 +21,7 @@ const PaymentHistory = () => {
     return (
         <div className="max-w-6xl mx-auto p-6">
             <h1 className="text-3xl font-bold mb-6 text-[#0B2E33]">
-                My Payment History ({payments.length})
+                Payment History ({payments.length})
             </h1>
             
             {payments.length === 0 ? (
@@ -64,7 +64,7 @@ const PaymentHistory = () => {
                                     </td>
                                     <td className="border p-3">{payment.cardIssuer}</td>
                                     <td className="border p-3 text-right">
-                                        ${parseFloat(payment.amount || payment.price || 0).toFixed(2)}
+                                        ${parseFloat(payment.amount || payment.price).toFixed(2)}
                                     </td>
                                     <td className="border p-3">
                                         <span className={`px-2 py-1 ${payment.status === "VALID" ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800"} rounded-full text-xs`}>
@@ -84,4 +84,4 @@ const PaymentHistory = () => {
     );
 };
 
-export default PaymentHistory;
+export default AllPayments;
