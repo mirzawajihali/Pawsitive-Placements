@@ -3,6 +3,7 @@ const app = express();
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const axios = require('axios');
+const querystring = require('querystring'); // Add this line to import querystring
 
 const multer = require('multer');
 const cloudinary = require('cloudinary').v2;
@@ -382,17 +383,17 @@ async function run() {
         store_passwd : "pawsi680662612b158@ssl",
         total_amount: payment.amount,
         currency: 'BDT',
-        tran_id: 'REF123', // use unique tran_id for each api call
+        tran_id: trzid, // use the unique transaction ID generated above
         success_url: 'http://localhost:3000/success-payment',
         fail_url: 'http://localhost:5173/fail',
         cancel_url: 'http://localhost:5173/cancel',
         ipn_url: 'http://localhost:3000/ipn',
         shipping_method: 'Courier',
-        product_name: 'Computer.',
-        product_category: 'Electronic',
+        product_name: 'Pet Adoption Fee',
+        product_category: 'Service',
         product_profile: 'general',
-        cus_name: 'Customer Name',
-        cus_email:`${payment.email}`,
+        cus_name: payment.userName || 'Customer Name',
+        cus_email: payment.email,
         cus_add1: 'Dhaka',
         cus_add2: 'Dhaka',
         cus_city: 'Dhaka',
@@ -401,7 +402,7 @@ async function run() {
         cus_country: 'Bangladesh',
         cus_phone: '01711111111',
         cus_fax: '01711111111',
-        ship_name: 'Customer Name',
+        ship_name: payment.userName || 'Customer Name',
         ship_add1: 'Dhaka',
         ship_add2: 'Dhaka',
         ship_city: 'Dhaka',
@@ -410,32 +411,59 @@ async function run() {
         ship_country: 'Bangladesh',
     };
 
-    const iniResponse = await axios({
-      url : "https://sandbox.sslcommerz.com/gwprocess/v3/api.php",
-      method : "POST",  
-      data : data,
-      headers :{
-        "Content-Type" : 'application/x-www-form-urlencoded'
+    try {
+      const iniResponse = await axios({
+        url: "https://sandbox.sslcommerz.com/gwprocess/v3/api.php",
+        method: "POST",  
+        data: querystring.stringify(data),
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
+      });
+
+      const result = await paymentsCollection.insertOne(payment);
+      
+      console.log("SSL Response:", iniResponse.data);
+      const gatewayURL = iniResponse?.data?.GatewayPageURL;
+      console.log(gatewayURL, "gatewayURL");
+
+      if (!gatewayURL) {
+        console.error("Failed to get gateway URL. Response:", iniResponse.data);
+        return res.status(500).send({ error: "Payment initialization failed", details: iniResponse.data });
       }
-    })
 
-    const result = await paymentsCollection.insertOne(payment);
-
-
-
-
-    const gatewayURL = iniResponse?.data?.GatewayPageURL;
-
-    console.log(gatewayURL, "gatewayURL");
-
-    res.send({url : gatewayURL});
+      res.send({ url: gatewayURL });
+    } catch (error) {
+      console.error("SSL Payment Error:", error.message);
+      res.status(500).send({ error: "Payment initialization failed", message: error.message });
+    }
     })
 
     app.post("/success-payment", async(req, res) => {
+
+      // success payment data 
       const paymentSuccess = req.body;
-      console.log("payment sucess info ", paymentSuccess)
-    }
-  )
+      console.log("payment success info ", paymentSuccess);
+
+
+      // validation
+      const isValidPayment = await axios.get(`https://sandbox.sslcommerz.com/validator/api/validationserverAPI.php?val_id=${paymentSuccess.val_id}&store_id=pawsi680662612b158&store_passwd=pawsi680662612b158@ssl`);
+
+      if(isValidPayment.data.status !=="VALID"){
+        return res.status(400).send({message : "payment failed"});
+      }
+
+      const updatePayment = await paymentsCollection.updateOne(
+        {transactionID : paymentSuccess.tran_id},
+        {$set : {status : isValidPayment.data.status,
+          cardIssuer: paymentSuccess.card_issuer || '',
+          validationId: paymentSuccess.val_id || '',
+
+        }}
+      );
+
+      res.redirect("http://localhost:5173/success-payment");
+    })
 
   
 

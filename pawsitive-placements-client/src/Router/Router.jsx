@@ -23,6 +23,7 @@ import Donate from '../components/Donate';
 import PaymentHistory from '../Dashboard/D-Components/PaymentHistory';
 import UserHome from '../Dashboard/D-Components/UserHome';
 import AdminHome from '../Dashboard/D-Components/AdminHome';
+import SuccessPayment from '../components/SuccessPayment';
 
 
   const router = createBrowserRouter([
@@ -47,7 +48,7 @@ import AdminHome from '../Dashboard/D-Components/AdminHome';
       },
         {
             path: "/reviews",
-            element:<PrivateRoute><Reviews></Reviews></PrivateRoute>,
+            element:<Reviews></Reviews>,
             loader:()=> fetch('http://localhost:3000/reviews')
 
         },
@@ -59,6 +60,11 @@ import AdminHome from '../Dashboard/D-Components/AdminHome';
         {
             path: "/donate",
             element:<Donate></Donate>,
+
+        },
+        {
+            path: "/success-payment",
+            element:<SuccessPayment></SuccessPayment>,
 
         },
        
