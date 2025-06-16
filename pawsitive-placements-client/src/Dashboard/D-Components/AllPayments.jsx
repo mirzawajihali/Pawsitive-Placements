@@ -2,6 +2,7 @@ import React from 'react';
 import { AuthContext } from '../../Provider/AuthProvider';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 const AllPayments = () => {
     
@@ -15,7 +16,7 @@ const AllPayments = () => {
         }
     });
 
-    if (isLoading) return <div className="text-center py-10">Loading payment history...</div>;
+    if (isLoading) return <LoadingSpinner />;
     if (error) return <div className="text-center py-10 text-red-500">Error loading payments: {error.message}</div>;
 
     return (
@@ -64,7 +65,7 @@ const AllPayments = () => {
                                     </td>
                                     <td className="border p-3">{payment.cardIssuer}</td>
                                     <td className="border p-3 text-right">
-                                        ${parseFloat(payment.amount || payment.price).toFixed(2)}
+                                        ${parseFloat(payment.amount || payment.price || 0).toFixed(2)}
                                     </td>
                                     <td className="border p-3">
                                         <span className={`px-2 py-1 ${payment.status === "VALID" ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800"} rounded-full text-xs`}>

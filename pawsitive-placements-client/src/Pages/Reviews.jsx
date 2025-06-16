@@ -5,7 +5,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { motion } from 'framer-motion';
 import { FaPaw, FaQuoteLeft, FaQuoteRight, FaStar } from 'react-icons/fa';
 import { ImStarEmpty } from 'react-icons/im';
-import AddReview from '../components/AddReview';
+
 import Rating from 'react-rating';
 
 const Reviews = () => {
@@ -136,7 +136,7 @@ const Reviews = () => {
      
         </motion.div>
       </div>
-          <AddReview></AddReview>
+        
     </section>
     );
 };

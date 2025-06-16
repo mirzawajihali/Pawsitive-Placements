@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { AuthContext } from '../../Provider/AuthProvider';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 const PaymentHistory = () => {
     const { user } = useContext(AuthContext);
@@ -15,7 +16,7 @@ const PaymentHistory = () => {
         }
     });
 
-    if (isLoading) return <div className="text-center py-10">Loading payment history...</div>;
+    if (isLoading) return <LoadingSpinner />;
     if (error) return <div className="text-center py-10 text-red-500">Error loading payments: {error.message}</div>;
 
     return (

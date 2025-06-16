@@ -25,6 +25,7 @@ import UserHome from '../Dashboard/D-Components/UserHome';
 import AdminHome from '../Dashboard/D-Components/AdminHome';
 import SuccessPayment from '../components/SuccessPayment';
 import AllPayments from '../Dashboard/D-Components/AllPayments';
+import NearbyPetServices from '../Pages/NearbyPetServices';
 
 
   const router = createBrowserRouter([
@@ -45,12 +46,18 @@ import AllPayments from '../Dashboard/D-Components/AllPayments';
         {
           path:"/pets/:id",
           element:<PrivateRoute><PetDetailPage></PetDetailPage></PrivateRoute>,
-          loader:({params})=>fetch(`http://localhost:3000/pets/${params.id}`)
+          loader:({params})=>fetch(`https://pawsitive-placements-server.vercel.app/pets/${params.id}`)
       },
         {
             path: "/reviews",
             element:<Reviews></Reviews>,
-            loader:()=> fetch('http://localhost:3000/reviews')
+            loader:()=> fetch('https://pawsitive-placements-server.vercel.app/reviews')
+
+        },
+        {
+            path: "/nearbyServices",
+            element:<NearbyPetServices></NearbyPetServices>,
+          
 
         },
         {
@@ -86,7 +93,11 @@ import AllPayments from '../Dashboard/D-Components/AllPayments';
       path: "dashboard",
       element:<PrivateRoute> <Dashboard></Dashboard></PrivateRoute>,
       children: [
-        
+        // Adding index route to redirect to userHome or adminHome based on user role
+        {
+          index: true,
+          element: <UserHome></UserHome>,
+        },
         {
           path: "userHome",
           element:<UserHome></UserHome>,

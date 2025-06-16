@@ -240,6 +240,16 @@ const Dashboard = () => {
                             {(!isDesktopNavCollapsed || isMobile) && <span>Add Pets</span>}
                           </Link>
                         </li>
+                        <li>
+                          <Link
+                            to={"/dashboard/allPayments"}
+                            className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#4F7C82] transition-colors whitespace-nowrap"
+                            onClick={closeMobileNav}
+                          >
+                            <span className="text-lg"><FaMoneyBill></FaMoneyBill></span>
+                            {(!isDesktopNavCollapsed || isMobile) && <span>All Payments</span>}
+                          </Link>
+                        </li>
                       </>
                     )  : (
                       navItems.map((item) => (

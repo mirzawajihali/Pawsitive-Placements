@@ -4,11 +4,13 @@ import logo from '../assets/images/LOGO.png'
 import { HashLink } from 'react-router-hash-link';
 import { AuthContext } from '../Provider/AuthProvider';
 import { PiDogBold } from "react-icons/pi";
+import useAdmin from '../hooks/useAdmin';
 
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isAdmin] = useAdmin();
 
   
 
@@ -63,18 +65,29 @@ const Navbar = () => {
               }`}>
                 Reviews
               </Link>
+              <Link to="/nearbyServices" className={`px-3 py-2 rounded-md text-sm font-medium ${
+                isScrolled ? 'text-[#041E2B] hover:text-[#B9D9EB]' : 'text-white hover:text-[#B9D9EB]'
+              }`}>
+                Services
+              </Link>
               <Link to="/contact" className={`px-3 py-2 rounded-md text-sm font-medium ${
                 isScrolled ? 'text-[#041E2B] hover:text-[#B9D9EB]' : 'text-white hover:text-[#B9D9EB]'
               }`}>
                 Contact
               </Link>
-              <Link to="/dashboard" className={`px-3 py-2 rounded-md text-sm font-medium ${
+             {isAdmin ?  <Link to="/dashboard/adminHome" className={`px-3 py-2 rounded-md text-sm font-medium ${
                 isScrolled ? 'text-[#041E2B] hover:text-[#B9D9EB]' : 'text-white hover:text-[#B9D9EB]'
               }`}>
                 <button className="btn btn-sm">
   Dashboard <div className="badge badge-sm bg-[#B9D9EB] "><PiDogBold /></div>
 </button>
-              </Link>
+              </Link> :  <Link to="/dashboard" className={`px-3 py-2 rounded-md text-sm font-medium ${
+                isScrolled ? 'text-[#041E2B] hover:text-[#B9D9EB]' : 'text-white hover:text-[#B9D9EB]'
+              }`}>
+                <button className="btn btn-sm">
+  Dashboard <div className="badge badge-sm bg-[#B9D9EB] "><PiDogBold /></div>
+</button>
+              </Link>}
             </div>
           
             
