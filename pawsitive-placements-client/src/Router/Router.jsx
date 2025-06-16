@@ -26,6 +26,7 @@ import AdminHome from '../Dashboard/D-Components/AdminHome';
 import SuccessPayment from '../components/SuccessPayment';
 import AllPayments from '../Dashboard/D-Components/AllPayments';
 import NearbyPetServices from '../Pages/NearbyPetServices';
+import AboutSection from '../components/AboutSection';
 
 
   const router = createBrowserRouter([
@@ -57,6 +58,12 @@ import NearbyPetServices from '../Pages/NearbyPetServices';
         {
             path: "/nearbyServices",
             element:<NearbyPetServices></NearbyPetServices>,
+          
+
+        },
+        {
+            path: "/about",
+            element:<AboutSection></AboutSection>,
           
 
         },

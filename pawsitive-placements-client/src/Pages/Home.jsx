@@ -15,7 +15,7 @@ const Home = () => {
             </Helmet>
        <Header></Header>
         <Category />
-     <AboutSection></AboutSection>
+     
         
        
         </div>

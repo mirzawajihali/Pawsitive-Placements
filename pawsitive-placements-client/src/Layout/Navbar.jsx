@@ -50,7 +50,7 @@ const Navbar = () => {
               }`}>
                 Home
               </Link>
-              <HashLink to="#about" smooth className={`px-3 py-2 rounded-md text-sm font-medium ${
+              <HashLink to="/about" smooth className={`px-3 py-2 rounded-md text-sm font-medium ${
                 isScrolled ? 'text-[#041E2B] hover:text-[#B9D9EB]' : 'text-white hover:text-[#B9D9EB]'
               }`}>
                 About

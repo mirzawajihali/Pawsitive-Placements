@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { Helmet } from 'react-helmet';
 
 const AboutSection = () => {
   // Refs for scroll-triggered animations
@@ -107,7 +108,18 @@ const AboutSection = () => {
   };
 
   return (
-    <section id="about" className="relative overflow-hidden" ref={sectionRef}>
+  <div>
+     <Helmet>
+                <meta charSet="utf-8" />
+                <title>Pets</title>
+                
+            </Helmet>
+            <div className="max-w-7xl h-16 mx-auto bg-black">
+      
+
+      </div> 
+
+      <section id="about" className="relative overflow-hidden" ref={sectionRef}>
       {/* Parallax floating background elements */}
       <motion.div 
         className="absolute -top-10 -right-10 w-64 h-64 rounded-full bg-[#B9D9EB] opacity-10"
@@ -444,6 +456,7 @@ const AboutSection = () => {
         </motion.div>
       </motion.div>
     </section>
+  </div>
   );
 };
 
