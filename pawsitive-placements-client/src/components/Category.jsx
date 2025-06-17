@@ -41,8 +41,8 @@ const Category = () => {
                     <div className="relative w-full h-full rounded-lg overflow-hidden">
                         <img 
                             className="w-full h-full object-cover" 
-                            src="https://images.unsplash.com/photo-1604076150017-48b528308aa3?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-                            alt="Goat" 
+                            src="https://images.unsplash.com/photo-1626448083198-215a269afd33?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                            alt="Birds" 
                         />
                         <h1 className="absolute bottom-4 left-4 text-white text-2xl  font-bold">Goats</h1>
                     </div>

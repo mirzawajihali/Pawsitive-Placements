@@ -4,6 +4,7 @@ import Header from '../Layout/Header';
 import AboutSection from '../components/AboutSection';
 
 import { Helmet } from 'react-helmet';
+import Works from '../components/Works';
 
 const Home = () => {
     return (
@@ -15,6 +16,7 @@ const Home = () => {
             </Helmet>
        <Header></Header>
         <Category />
+        <Works/>
      
         
        

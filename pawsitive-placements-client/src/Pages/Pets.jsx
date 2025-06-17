@@ -14,7 +14,7 @@ const Pets = () => {
     // const [loading, setLoading] = useState(true);
 
     // useEffect(() => {
-    //     fetch('https://pawsitive-placements-server.vercel.app/pets')
+    //     fetch('http://localhost:3000/pets')
     //         .then(res => res.json())
     //         .then(data => {
                
@@ -32,7 +32,7 @@ const Pets = () => {
 
     useEffect(() =>{
         setLoading(true);
-        fetch(`https://pawsitive-placements-server.vercel.app/pets?searchBreed=${searchBreed}`)
+        fetch(`http://localhost:3000/pets?searchBreed=${searchBreed}`)
         .then(res => res.json())
         .then(data => {
             setPets(data);

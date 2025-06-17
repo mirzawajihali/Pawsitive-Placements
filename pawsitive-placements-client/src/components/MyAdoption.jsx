@@ -17,7 +17,7 @@ const MyAdoption = () => {
     // useEffect(() => {
     //     if (user?.email) {
     //         setLoading(true);
-    //         axios.get(`https://pawsitive-placements-server.vercel.app/application?email=${user.email}`)
+    //         axios.get(`http://localhost:3000/application?email=${user.email}`)
 
 
     //             .then(res => {

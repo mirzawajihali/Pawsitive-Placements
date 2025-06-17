@@ -114,11 +114,16 @@ const NearbyPetServices = () => {
   );
 
   return (
-    <section className="py-12 px-4 bg-[#F8FBFD]">
+    <section className="pb-12 px-4 bg-[#F8FBFD]">
       <Helmet>
         <title>Nearby Pet Services | Pawsitive Placements</title>
         <meta name="description" content="Find nearby pet hospitals and pet shops to care for your furry friends" />
       </Helmet>
+      <div className="max-w-7xl h-16 mx-auto bg-black">
+      
+
+      </div> 
+
       
       <div className="container mx-auto">
         <SectionTitle 

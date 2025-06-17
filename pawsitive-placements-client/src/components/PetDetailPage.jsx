@@ -55,7 +55,7 @@ const PetDetailPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("https://pawsitive-placements-server.vercel.app/application", { petId: _id, ...formData })
+    axios.post("http://localhost:3000/application", { petId: _id, ...formData })
     .then(res => {
       if(res.data.insertedId){
         Swal.fire({

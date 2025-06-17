@@ -37,7 +37,7 @@ const Donate = () => {
         alert(`SSLCommerz payment of $${amount} would be initiated here`);
 
 
-        const response = await axios.post("https://pawsitive-placements-server.vercel.app/create-ssl-payment", payment);
+        const response = await axios.post("http://localhost:3000/create-ssl-payment", payment);
 
         if(response.data?.url){
             window.location.replace(response.data.url); }

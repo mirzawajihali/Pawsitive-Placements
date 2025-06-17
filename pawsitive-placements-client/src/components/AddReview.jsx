@@ -55,7 +55,7 @@ const AddReview = () => {
       }
 
       const response = await axios.post(
-        'https://pawsitive-placements-server.vercel.app/reviews', // Add full backend URL
+        'http://localhost:3000/reviews', // Add full backend URL
         formData,
         {
           headers: {
