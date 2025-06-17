@@ -13,7 +13,7 @@ require("dotenv").config();
 const stripe =require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173', // Your React app's URL
+  origin: process.env.FRONTEND_URL || 'https://burj-al-arab-d0a77.web.app', // Your React app's URL
   credentials: true
 }));
 app.use(express.json());
@@ -89,7 +89,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
+    // await client.connect();
 
 
 
@@ -392,10 +392,10 @@ async function run() {
         total_amount: payment.amount,
         currency: 'BDT',
         tran_id: trzid, // use the unique transaction ID generated above
-        success_url: 'http://localhost:3000/success-payment',
+        success_url: 'https://pawsitive-placements-server.vercel.app/success-payment',
         fail_url: 'http://localhost:5173/fail',
         cancel_url: 'http://localhost:5173/cancel',
-        ipn_url: 'http://localhost:3000/ipn',
+        ipn_url: 'https://pawsitive-placements-server.vercel.app/ipn',
         shipping_method: 'Courier',
         product_name: 'Pet Adoption Fee',
         product_category: 'Service',
@@ -498,8 +498,8 @@ async function run() {
     })
 
 
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    // await client.db("admin").command({ ping: 1 });
+    // console.log("Pinged your deployment. You successfully connected to MongoDB!");
   } finally {
     // Ensures that the client will close when you finish/error
     // await client.close();
