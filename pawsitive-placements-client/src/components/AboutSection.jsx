@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { useScroll, useTransform, useInView } from 'framer-motion';
 import { Helmet } from 'react-helmet';
-
+import { motion} from "framer-motion"
 const AboutSection = () => {
   // Refs for scroll-triggered animations
   const sectionRef = useRef(null);
