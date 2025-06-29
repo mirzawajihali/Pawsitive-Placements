@@ -13,7 +13,7 @@ require("dotenv").config();
 const stripe =require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 app.use(cors({
-  origin: 'http://localhost:5173', // Your React app's URL
+  origin: 'http://localhost:5173' || "https://burj-al-arab-d0a77.web.app/", // Your React app's URL
   credentials: true
 }));
 app.use(express.json());
@@ -215,19 +215,89 @@ async function run() {
   
 
     app.get('/pets', async (req, res) => {
-      const searchBreed = req.query?.searchBreed;
-      let query = {};
+      try {
+        const {
+          searchBreed,
+          age,
+          gender,
+          size,
+          vaccinated,
+          spayedNeutered,
+          location,
+          category
+        } = req.query;
 
-      if(searchBreed){
-        query.breed = {
-          $regex: searchBreed,
-          $options: "i"
+        // Build aggregation pipeline
+        let pipeline = [];
+
+        // Match stage - build match conditions
+        let matchConditions = {};
+
+        if (searchBreed) {
+          matchConditions.breed = {
+            $regex: searchBreed,
+            $options: "i"
+          };
         }
-      }
 
-        const cursor = petsCollection.find(query);
-        const pets = await cursor.toArray();
+        if (category) {
+          matchConditions.category = {
+            $regex: category,
+            $options: "i"
+          };
+        }
+
+        if (age) {
+          const ageNum = parseInt(age);
+          if (!isNaN(ageNum)) {
+            matchConditions.age = ageNum;
+          }
+        }
+
+        if (gender) {
+          matchConditions.gender = {
+            $regex: gender,
+            $options: "i"
+          };
+        }
+
+        if (size) {
+          matchConditions.size = {
+            $regex: size,
+            $options: "i"
+          };
+        }
+
+        if (location) {
+          matchConditions.location = {
+            $regex: location,
+            $options: "i"
+          };
+        }
+
+        if (vaccinated !== undefined) {
+          matchConditions.vaccinated = vaccinated === 'true';
+        }
+
+        if (spayedNeutered !== undefined) {
+          matchConditions.spayedNeutered = spayedNeutered === 'true';
+        }
+
+        // Add match stage if there are conditions
+        if (Object.keys(matchConditions).length > 0) {
+          pipeline.push({ $match: matchConditions });
+        }
+
+        // Add sorting stage (newest first)
+        pipeline.push({ $sort: { postedDate: -1 } });
+
+        // Execute aggregation
+        const pets = await petsCollection.aggregate(pipeline).toArray();
         res.send(pets);
+      } catch (error) {
+        console.error("Error fetching pets:", error);
+        res.status(500).send({ error: "Failed to fetch pets" });
+      }
     });
 
     app.post('/pets',verifyToken, verifyAdmin, async(req, res )=>{
