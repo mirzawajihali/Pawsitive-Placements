@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { useScroll, useTransform, useInView } from 'framer-motion';
 import { Helmet } from 'react-helmet';
 
 const AboutSection = () => {

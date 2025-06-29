@@ -13,7 +13,7 @@ require("dotenv").config();
 const stripe =require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'https://burj-al-arab-d0a77.web.app', // Your React app's URL
+  origin: 'http://localhost:5173', // Your React app's URL
   credentials: true
 }));
 app.use(express.json());

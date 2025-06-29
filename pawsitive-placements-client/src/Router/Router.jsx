@@ -47,12 +47,12 @@ import AboutSection from '../components/AboutSection';
         {
           path:"/pets/:id",
           element:<PrivateRoute><PetDetailPage></PetDetailPage></PrivateRoute>,
-          loader:({params})=>fetch(`http://localhost:3000/pets/${params.id}`)
+          loader:({params})=>fetch(`https://pawsitive-placements-server.vercel.app/pets/${params.id}`)
       },
         {
             path: "/reviews",
             element:<Reviews></Reviews>,
-            loader:()=> fetch('http://localhost:3000/reviews')
+            loader:()=> fetch('https://pawsitive-placements-server.vercel.app/reviews')
 
         },
         {
