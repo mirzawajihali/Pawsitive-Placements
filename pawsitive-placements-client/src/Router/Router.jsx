@@ -27,6 +27,7 @@ import SuccessPayment from '../components/SuccessPayment';
 import AllPayments from '../Dashboard/D-Components/AllPayments';
 import NearbyPetServices from '../Pages/NearbyPetServices';
 import AboutSection from '../components/AboutSection';
+import ScrollToTop from '../components/ScrollToTop';
 
 
   const router = createBrowserRouter([

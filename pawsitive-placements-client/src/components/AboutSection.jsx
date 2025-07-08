@@ -1,8 +1,14 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { useScroll, useTransform, useInView } from 'framer-motion';
 import { Helmet } from 'react-helmet';
 import { motion} from "framer-motion"
+
 const AboutSection = () => {
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // Refs for scroll-triggered animations
   const sectionRef = useRef(null);
   const missionRef = useRef(null);
@@ -387,7 +393,7 @@ const AboutSection = () => {
             >
               <div className="h-76 relative">
                 <img
-                  src="https://scontent.fdac24-5.fna.fbcdn.net/v/t1.15752-9/485223059_1115369216944790_2768389872980555564_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=9f807c&_nc_eui2=AeFLbpzNG6lA-PZLah35PqOQS4jJq-goX1pLiMmr6ChfWm3MvVv8AfMo41j9SMAe87L5UujCYr6mMKByDqA7uSDP&_nc_ohc=d8MQZD7xz90Q7kNvgEYiik7&_nc_oc=Adm1XZynY_nuQvDKGk540coSuaZg_TDZ1Pv3lUkycF8rFaIQLDh-xsyzc-mGOSfWVyU&_nc_zt=23&_nc_ht=scontent.fdac24-5.fna&oh=03_Q7cD1wE_pbyPy21wu-Zrj_WJ_1Np-Exwm9MCm-Ohf6_3vvPDYw&oe=680BD31B"
+                  src="https://scontent.fcgp27-1.fna.fbcdn.net/v/t39.30808-6/495542407_1211248090704576_9095100183327367315_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEjqAiW4UAeN7Ysxf6SoS_LuLzLFlnNVhy4vMsWWc1WHJCVewrHFRVunX18tK_v3J5suWIOmlfjvehZYzFi6khX&_nc_ohc=Bf8IV2UHMJAQ7kNvwFYiMIb&_nc_oc=AdmIa7hdVGxMW2bgUotjlaX5_na7ridBS-KhJVCiKNi4QvEMBpoLRhTTiokL_JM_7pU&_nc_zt=23&_nc_ht=scontent.fcgp27-1.fna&_nc_gid=CZEeVe5aNQdAL5Wh0r7P6Q&oh=00_AfShYO0XAnnKGV4jgeTVGsPWSadZL5u2di1RuEk-oRheCA&oe=6872BF4D"
                   alt="Emily Rodriguez"
                   className="w-full h-full object-cover object-center"
                 />

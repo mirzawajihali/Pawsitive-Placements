@@ -64,6 +64,18 @@ const Login = () => {
   <section>
     <div className="max-w-7xl h-16 mx-auto bg-black"> </div>
       <div className="min-h-screen bg-gray-50 flex flex-col justify-center pb-12 sm:px-6 lg:px-8">
+
+        <div class="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md my-4">
+  <h1 class="text-2xl font-bold text-center text-blue-600 mb-4">For Testing Purpose</h1>
+  <div class="bg-gray-100 p-4 rounded-md">
+    <h2 class="text-lg font-semibold text-gray-800 mb-2">Admin credentials:</h2>
+    <div class="space-y-2">
+      <p class="text-gray-700"><span class="font-medium">Email:</span> admin1010@gmail.com</p>
+      <p class="text-gray-700"><span class="font-medium">Password:</span> admin123</p>
+    </div>
+  </div>
+ 
+</div>
         
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <motion.div
